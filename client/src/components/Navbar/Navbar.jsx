@@ -1,5 +1,6 @@
 import React from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
+import logo from "../../assets/logo-new.png";
 import { NavbarMenu } from "../../mockData/data";
 import { FaDumbbell } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
@@ -14,9 +15,9 @@ const Navbar = () => {
         <div className="container flex justify-between items-center py-8">
           {/* Logo Section */}
           <div className="text-2xl flex items-center gap-2 font-bold uppercase">
-            <FaDumbbell />
-            <p>Coders</p>
-            <p className="text-secondary">Gym</p>
+            {/* <FaDumbbell /> */}
+            <img src={logo} alt="logo" width={60} />
+            <p className="text-navColor">IRRIGO</p>
           </div>
 
           {/* Menu Section */}
@@ -27,7 +28,7 @@ const Navbar = () => {
                   <li key={item.id}>
                     <a
                       href={item.link}
-                      className="inline-block py-1 px-3 hover:text-primary font-semibold "
+                      className="inline-block py-1 px-3 hover:text-customColor font-semibold text-navColor"
                     >
                       {item.title}
                     </a>
@@ -39,14 +40,18 @@ const Navbar = () => {
 
           {/* Icons Section */}
           <div className="flex items-center gap-4">
-            <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
+            {/* <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
               <CiSearch />
             </button>
             <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
               <PiShoppingCartThin />
-            </button>
-            <button className="hover:bg-primary text-primary font-semibold hover:text-white rounded-md border-2 border-primary px-6 py-2 duration-200 hidden md:block">
+            </button> */}
+            <button 
+            className="hover:bg-customColor bg-bgLogin text-white font-semibold rounded-md border-2 border-none px-6 py-2 duration-200 hidden md:block" >
               Login
+            </button>
+            <button className="hover:bg-customColor text-primary font-semibold hover:text-white rounded-md border-2 border-primary px-6 py-2 duration-200 hidden md:block">
+              Register
             </button>
           </div>
 
