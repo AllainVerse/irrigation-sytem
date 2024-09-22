@@ -4,12 +4,18 @@ exports.createPlot = async (req, res) => {
   const { plot_name, area } = req.body;
 
   try {
+    // Pastikan req.user.id ada
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
     const plot = await Plot.create({
       plot_name,
       area,
-      user: req.user.id,
+      user_id: req.user.id, // Ubah 'user' menjadi 'user_id'
     });
-    res.status(201).json({ message: "Plot created successfully" });
+
+    res.status(201).json({ message: "Plot created successfully", plot });
   } catch (error) {
     res
       .status(500)
@@ -17,14 +23,15 @@ exports.createPlot = async (req, res) => {
   }
 };
 
-exports.getPlot = async (req, res) => {
+// Ubah nama fungsi ini dari getPlot menjadi getPlots
+exports.getPlots = async (req, res) => {
   try {
-    const plot = await Plot.findAll();
-    res.json(plot);
+    const plots = await Plot.findAll(); // Ambil semua plot
+    res.json(plots);
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error fetching plot", Error: error.message });
+      .json({ message: "Error fetching plots", error: error.message });
   }
 };
 
@@ -45,7 +52,7 @@ exports.updatePlot = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error updating plot", Error: error.message });
+      .json({ message: "Error updating plot", error: error.message });
   }
 };
 
