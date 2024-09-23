@@ -4,6 +4,7 @@ const {
   getPlots,
   updatePlot,
   deletePlot,
+  predictPlant,
 } = require("../controllers/plotController");
 const checkRole = require("../middlewares/checkRole");
 const authenticateToken = require("../middlewares/authenticateToken");
@@ -17,5 +18,11 @@ router.get("/", authenticateToken, checkRole(["farmer", "admin"]), getPlots);
 router.post("/", authenticateToken, checkRole(["admin"]), createPlot);
 router.put("/:plot_id", authenticateToken, checkRole(["admin"]), updatePlot);
 router.delete("/:plot_id", authenticateToken, checkRole(["admin"]), deletePlot);
+router.post(
+  "/:plot_id/predict",
+  authenticateToken,
+  checkRole(["admin", "farmer"]),
+  predictPlant
+);
 
 module.exports = router;

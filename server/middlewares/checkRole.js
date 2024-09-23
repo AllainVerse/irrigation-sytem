@@ -1,15 +1,13 @@
-const { all } = require("express/lib/application");
 const { User } = require("../models");
 
-const checkRole = async (allowedRoles) => {
-  return async (req, res, next) => {
-    const userId = req.userId;
-    const user = await User.findByPk(userId);
+const checkRole = (allowedRoles) => {
+  return (req, res, next) => {
+    const userRole = req.user.role; // Asumkan role juga ada di req.user
 
-    if (allowedRoles.includes(user.role)) {
-      next();
+    if (allowedRoles.includes(userRole)) {
+      next(); // Jika role sesuai, lanjutkan ke controller
     } else {
-      res.status(403).json({ message: "Access denied!" });
+      return res.status(403).json({ message: "Access denied!" });
     }
   };
 };
