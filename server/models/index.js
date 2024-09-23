@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize("irrigation_system", "postgres", "admin123", {
+const sequelize = new Sequelize("irrigation_system", "postgres", "postgres", {
   host: "localhost",
   dialect: "postgres",
   logging: false,
@@ -103,7 +103,7 @@ const Device = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "plot", // Nama tabel yang dirujuk
+        model: "plots", // Nama tabel yang dirujuk
         key: "plot_id",
       },
       onDelete: "CASCADE",
