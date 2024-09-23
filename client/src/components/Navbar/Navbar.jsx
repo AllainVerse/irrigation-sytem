@@ -46,13 +46,13 @@ const Navbar = () => {
             <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
               <PiShoppingCartThin />
             </button> */}
-            <button 
-            className="hover:bg-customColor bg-bgLogin text-white font-semibold rounded-md border-2 border-none px-6 py-2 duration-200 hidden md:block" >
+            <a 
+            className="hover:bg-customColor bg-bgLogin text-white font-semibold rounded-md border-2 border-none px-6 py-2 duration-200 hidden md:block" href="/login">
               Login
-            </button>
-            <button className="hover:bg-customColor text-primary font-semibold hover:text-white rounded-md border-2 border-primary px-6 py-2 duration-200 hidden md:block">
+            </a>
+            <a className="hover:bg-customColor text-primary font-semibold hover:text-white rounded-md border-2 border-primary px-6 py-2 duration-200 hidden md:block" href="/register">
               Register
-            </button>
+            </a>
           </div>
 
           {/* Mobile Hamburger Menu Section */}

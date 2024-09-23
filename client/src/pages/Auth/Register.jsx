@@ -85,7 +85,7 @@ const Register = () => {
           <div className="mt-4 flex justify-end w-full ml-[10px]">
             <p className="text-gray-700">
               Has already account?{" "}
-              <a href="#" className="text-[#3B8132] font-bold hover:underline">
+              <a href="/login" className="text-[#3B8132] font-bold hover:underline">
                 Sign In
               </a>
             </p>

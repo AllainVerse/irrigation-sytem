@@ -60,10 +60,10 @@ const Login = () => {
               />
               <div className="flex justify-end">
                 <a
-                  className="mb-4 inline-block align-baseline font-light text-sm text-black hover:text-blue-800"
+                  className="mb-4 inline-block align-baseline font-medium text-sm text-black hover:text-blue-800"
                   href="#"
                 >
-                  forget Password?
+                  Forgot Password?
                 </a>
               </div>
             </div>
@@ -79,7 +79,7 @@ const Login = () => {
           <div className="mt-4 flex justify-end w-full ml-[10px]">
             <p className="text-gray-700">
               Create new account?{" "}
-              <a href="#" className="text-[#3B8132] font-bold hover:underline">
+              <a href="/register" className="text-[#3B8132] font-bold hover:underline">
                 Sign Up
               </a>
             </p>
