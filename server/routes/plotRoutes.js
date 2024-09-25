@@ -11,7 +11,7 @@ const {
   updateDevice,
   deleteDevice,
   getDevices,
-} = require("../controllers/sensorController");
+} = require("../controllers/deviceController");
 const checkRole = require("../middlewares/checkRole");
 const authenticateToken = require("../middlewares/authenticateToken");
 
