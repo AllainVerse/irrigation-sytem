@@ -1,10 +1,19 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 import joblib
 import numpy as np
 import pandas as pd
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Mengizinkan origin tertentu
+    allow_credentials=True, # Mengizinkan kredensial (seperti cookies)
+    allow_methods=["*"],    # Mengizinkan semua metode HTTP
+    allow_headers=["*"],    # Mengizinkan semua header
+)
 
 model = joblib.load('soil_prediction.pkl')
 scaler = joblib.load('scaler.pkl')
