@@ -1,7 +1,27 @@
 import React from "react";
+import { useRef, useState, useEffect } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { email, password } = event.target;
+    try {
+      const response = await axios.post("/login", {
+        email: email.value,
+        password: password.value,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="h-screen flex justify-center items-center bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598]">
       <div className="flex w-3/5 items-center">
@@ -30,7 +50,10 @@ const Login = () => {
             </span>
           </div>
 
-          <form className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]">
+          <form
+            className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]"
+            onSubmit={handleSubmit}
+          >
             <div className="mb-4">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
@@ -42,7 +65,9 @@ const Login = () => {
                 id="email"
                 type="email"
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder=""
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-6">
@@ -56,7 +81,9 @@ const Login = () => {
                 id="password"
                 type="password"
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder=""
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <div className="flex justify-end">
                 <a
@@ -79,7 +106,10 @@ const Login = () => {
           <div className="mt-4 flex justify-end w-full ml-[10px]">
             <p className="text-gray-700">
               Create new account?{" "}
-              <a href="/register" className="text-[#3B8132] font-bold hover:underline">
+              <a
+                href="/register"
+                className="text-[#3B8132] font-bold hover:underline"
+              >
                 Sign Up
               </a>
             </p>

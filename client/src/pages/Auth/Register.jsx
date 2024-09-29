@@ -1,7 +1,29 @@
 import React from "react";
+import { useRef, useState, useEffect } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { name, email, password } = event.target;
+    try {
+      const response = await axios.post("/register", {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="h-screen flex justify-center items-center bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598]">
       <div className="flex w-3/5 items-center">
@@ -30,7 +52,7 @@ const Register = () => {
             </span>
           </div>
 
-          <form className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]">
+          <form className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]" onSubmit={handleSubmit}>
           <div className="mb-4">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
@@ -40,9 +62,11 @@ const Register = () => {
               </label>
               <input
                 id="fullname"
-                type="fullname"
+                type="text"
+                value={name}
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder=""
               />
             </div>
             <div className="mb-4">
@@ -56,7 +80,9 @@ const Register = () => {
                 id="email"
                 type="email"
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder=""
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-6">
@@ -70,13 +96,15 @@ const Register = () => {
                 id="password"
                 type="password"
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder=""
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="flex items-center justify-between">
               <Button
                 className="w-[463px] bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
-                type="button"
+                type="submit"
               >
                 Continue
               </Button>
