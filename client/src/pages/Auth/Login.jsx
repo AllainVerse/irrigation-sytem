@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,11 +11,10 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { email, password } = event.target;
     try {
-      const response = await axios.post("/login", {
-        email: email.value,
-        password: password.value,
+      const response = await axios.post("http://localhost:3000/login", {
+        email,
+        password,
       });
       console.log(response.data);
     } catch (error) {
@@ -95,12 +95,14 @@ const Login = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <Button
-                className="w-[463px] bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
-                type="button"
-              >
-                Sign In
-              </Button>
+              <Link to="/">
+                <Button
+                  className="w-[335px] bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
+                  type="button"
+                >
+                  Sign In
+                </Button>
+              </Link>
             </div>
           </form>
           <div className="mt-4 flex justify-end w-full ml-[10px]">

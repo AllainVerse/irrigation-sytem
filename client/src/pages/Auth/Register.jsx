@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -11,12 +12,11 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { name, email, password } = event.target;
     try {
-      const response = await axios.post("/register", {
-        name: name.value,
-        email: email.value,
-        password: password.value,
+      const response = await axios.post("http://localhost:3000/register", {
+        name,
+        email,
+        password,
       });
       console.log(response.data);
     } catch (error) {
@@ -52,8 +52,11 @@ const Register = () => {
             </span>
           </div>
 
-          <form className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]" onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <form
+            className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]"
+            onSubmit={handleSubmit}
+          >
+            <div className="mb-4">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
                 htmlFor="fullname"
@@ -102,18 +105,23 @@ const Register = () => {
               />
             </div>
             <div className="flex items-center justify-between">
-              <Button
-                className="w-[463px] bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Continue
-              </Button>
+              <Link to="/login">
+                <Button
+                  className="w-[335px] bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Continue
+                </Button>
+              </Link>
             </div>
           </form>
           <div className="mt-4 flex justify-end w-full ml-[10px]">
             <p className="text-gray-700">
               Has already account?{" "}
-              <a href="/login" className="text-[#3B8132] font-bold hover:underline">
+              <a
+                href="/login"
+                className="text-[#3B8132] font-bold hover:underline"
+              >
                 Sign In
               </a>
             </p>
