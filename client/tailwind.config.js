@@ -24,6 +24,9 @@ export default {
         },
       },
       colors: {
+        customColor: '#1abc9c',
+        bgLogin: '#58B737',
+        navColor: '#DFEDC0',
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

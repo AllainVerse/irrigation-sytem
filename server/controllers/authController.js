@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { User } = require("../models");
+const { Op } = require("sequelize");
 const SECRET_KEY = "s3cr3tK3y!@#$%^&*()_+VERY_SECRET";
 
 // Register user
@@ -39,9 +40,13 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ email: user.email }, SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: user.user_id, email: user.email, role: user.role },
+      SECRET_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", Error: error.message });
@@ -109,9 +114,4 @@ exports.resetPassword = async (req, res) => {
       .status(500)
       .json({ message: "Error resetting password", error: error.message });
   }
-};
-
-// Protected route (Dashboard)
-exports.dashboard = (req, res) => {
-  res.json({ message: `Welcome ${req.user.email}` });
 };
