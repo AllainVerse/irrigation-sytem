@@ -85,7 +85,7 @@ const Footer = () => {
 
         {/* Informasi */}
         <div>
-          <p className="font-bold mb-4">Information</p>
+          <p className="font-bold mb-4">INFORMATION</p>
           <ul>
             <li>
               <a href="#" className="text-gray-600 hover:underline">
@@ -107,7 +107,7 @@ const Footer = () => {
 
         {/* Service */}
         <div>
-          <p className="font-bold mb-4">Service</p>
+          <p className="font-bold mb-4">SERVICES</p>
           <ul>
             <li>...</li>
             <li>...</li>
@@ -118,49 +118,45 @@ const Footer = () => {
         <div className="col-span-2">
           <p className="font-bold mb-4">KAMI MENERIMA</p>
           {/* Logo Pembayaran */}
-          <div className="grid grid-cols-5 gap-1">
+          <div className="grid grid-cols-5 gap-2 ">
             <a href="">
-              <img src={BCA} alt="Logo Pembayaran 1" className="w-16 h-auto" />
+              <img src={BCA} alt="Logo Pembayaran 1" className="w-14 h-auto" />
             </a>
             <a href="">
-              <img src={BNI} alt="Logo Pembayaran 2" className="w-16 h-auto" />
+              <img src={BNI} alt="Logo Pembayaran 2" className="w-14 h-auto" />
             </a>
             <a href="">
-              <img src={BRI} alt="Logo Pembayaran 3" className="w-12 h-auto" />
+              <img src={BRI} alt="Logo Pembayaran 3" className="w-10 h-auto" />
             </a>
             <a href="">
-              <img
-                src={CIMB}
-                alt="Logo Pembayaran 3"
-                className="w-24 mt-1 h-auto"
-              />
+              <img src={CIMB} alt="Logo Pembayaran 3" className="w-20 h-auto" />
             </a>
             <a href="">
               <img
                 src={MANDIRI}
                 alt="Logo Pembayaran 3"
-                className="w-20 ml-2 -mt-1 h-auto"
+                className="w-16 ml-2 -mt-2 h-auto"
               />
             </a>
             <a href="">
               <img
                 src={LINKAJA}
                 alt="Logo Pembayaran 3"
-                className="w-9 ml-6 h-auto"
+                className="w-8 ml-6 h-auto"
               />
             </a>
             <a href="">
               <img
                 src={SPPAY}
                 alt="Logo Pembayaran 3"
-                className="w-20 h-auto"
+                className="w-16 h-auto"
               />
             </a>
             <a href="">
               <img
                 src={OVO}
                 alt="Logo Pembayaran 3"
-                className="w-16 mt-2 h-auto"
+                className="w-14 mt-2 h-auto"
               />
             </a>
             <a href="">
@@ -181,21 +177,21 @@ const Footer = () => {
               <img
                 src={MAYBANK}
                 alt="Logo Pembayaran 3"
-                className="w-16 ml-2 h-auto"
+                className="w-14 ml-3 mt-1 h-auto"
               />
             </a>
             <a href="">
               <img
                 src={VISA}
                 alt="Logo Pembayaran 3"
-                className="w-16 mt-2 h-auto"
+                className="w-14 mt-2 h-auto"
               />
             </a>
             <a href="">
               <img
                 src={KREDIVO}
                 alt="Logo Pembayaran 3"
-                className="w-20 mt-2 h-auto"
+                className="w-16 mt-2 h-auto"
               />
             </a>
             <a href="">
@@ -206,7 +202,11 @@ const Footer = () => {
               />
             </a>
             <a href="">
-              <img src={BSI} alt="Logo Pembayaran 3" className="w-16 h-auto" />
+              <img
+                src={BSI}
+                alt="Logo Pembayaran 3"
+                className="w-14 mt-1 ml-2 h-auto"
+              />
             </a>
           </div>
 
