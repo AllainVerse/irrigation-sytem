@@ -52,8 +52,11 @@ const Register = () => {
             </span>
           </div>
 
-          <form className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]" onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <form
+            className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]"
+            onSubmit={handleSubmit}
+          >
+            <div className="mb-4">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
                 htmlFor="fullname"
@@ -113,7 +116,10 @@ const Register = () => {
           <div className="mt-4 flex justify-end w-full ml-[10px]">
             <p className="text-gray-700">
               Has already account?{" "}
-              <a href="/login" className="text-[#3B8132] font-bold hover:underline">
+              <a
+                href="/login"
+                className="text-[#3B8132] font-bold hover:underline"
+              >
                 Sign In
               </a>
             </p>
