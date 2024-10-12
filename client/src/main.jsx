@@ -18,6 +18,8 @@ const router = createBrowserRouter([
     path: "/Dashboard",
     element: <Dashboard />,
     errorElement: <Error404Page />,
+  },
+  {
     path: "/login",
     element: <Login />,  // Halaman Login
   },
