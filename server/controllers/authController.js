@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { User } = require("../models");
+const { TokenBlacklist } = require("../models");
 const { Op } = require("sequelize");
 const SECRET_KEY = "s3cr3tK3y!@#$%^&*()_+VERY_SECRET";
 
@@ -113,5 +114,23 @@ exports.resetPassword = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error resetting password", error: error.message });
+  }
+};
+
+exports.logout = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(400).json({ message: "No token provided" });
+  }
+
+  try {
+    // Simpan token ke tabel blacklist
+    await TokenBlacklist.create({ token });
+    res.status(200).json({ message: "User logged out successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error logging out", error: error.message });
   }
 };
