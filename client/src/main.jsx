@@ -7,6 +7,7 @@ import Error404Page from "./pages/404";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import "./index.css";
+import Log from "@/pages/Log";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,12 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,  // Halaman Register
-  },
+  }, 
+  {
+      path: "/Log",
+      element: <Log />,  // Halaman Irrigation Log
+    },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

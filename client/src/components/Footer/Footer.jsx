@@ -4,7 +4,7 @@ import React from "react";
 const irrigoLogo =
   "https://res.cloudinary.com/dqrazyfpm/image/upload/v1726919924/gsotifpl55w0qenu3cpe.png";
 const BCA =
-  "https://res.cloudinary.com/dqrazyfpm/image/upload/v1727548786/bca_bj0ulf.png ";
+  "https://res.cloudinary.com/dqrazyfpm/image/upload/v1727548786/bca_bj0ulf.png";
 const BNI =
   "https://res.cloudinary.com/dqrazyfpm/image/upload/v1727545908/bni_zxtwat.png";
 const BRI =
@@ -49,12 +49,12 @@ const Footer = () => {
       <div className="w-full h-1 bg-[#BED193]"></div>
 
       {/* Container utama footer dengan margin otomatis dan padding */}
-      <div className="container mx-auto py-16 px-6 flex justify-between">
+      <div className="container mx-auto py-16 px-6 grid grid-cols-1 gap-8 lg:grid-cols-4">
         {/* Bagian kiri - Logo Irrigo dan Deskripsi */}
-        <div className="block">
-          <div className="col-span-2 flex">
+        <div className="lg:col-span-1 text-black">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center">
             <img src={irrigoLogo} alt="Irrigo Logo" className="mb-6 w-36" />
-            <div>
+            <div className="ml-0 lg:ml-6">
               <p className="font-bold">IRRIGO</p>
               <p className="mb-4">
                 Irrigo is a tool for Automated Monitoring System For Your Farm
@@ -64,7 +64,7 @@ const Footer = () => {
             </div>
           </div>
           {/* Alamat Kantor */}
-          <div>
+          <div className="mt-4 text-black">
             <p className="font-bold">IRRIGO Head Office</p>
             <p>Politeknik Elektronika Negeri Surabaya</p>
             <p>
@@ -72,7 +72,7 @@ const Footer = () => {
               60111
             </p>
             <p>
-              Laman Web:
+              Laman Web:{" "}
               <a
                 href="https://www.pens.ac.id/"
                 className="text-blue-500 hover:underline"
@@ -84,7 +84,7 @@ const Footer = () => {
         </div>
 
         {/* Informasi */}
-        <div>
+        <div className="lg:col-span-1 lg:ml-16 text-black">
           <p className="font-bold mb-4">INFORMATION</p>
           <ul>
             <li>
@@ -94,19 +94,19 @@ const Footer = () => {
             </li>
             <li>
               <a href="#" className="text-gray-600 hover:underline">
-                Privasi Police
+                Privacy Policy
               </a>
             </li>
             <li>
               <a href="#" className="text-gray-600 hover:underline">
                 Terms and Conditions
-              </a>
+              </a>  
             </li>
           </ul>
         </div>
 
         {/* Service */}
-        <div>
+        <div className="lg:col-span-1 text-black">
           <p className="font-bold mb-4">SERVICES</p>
           <ul>
             <li>...</li>
@@ -115,103 +115,55 @@ const Footer = () => {
         </div>
 
         {/* Bagian kanan - Pembayaran dan Sosial Media */}
-        <div className="col-span-2">
-          <p className="font-bold mb-4">KAMI MENERIMA</p>
-          {/* Logo Pembayaran */}
-          <div className="grid grid-cols-5 gap-2 ">
-            <a href="">
-              <img src={BCA} alt="Logo Pembayaran 1" className="w-14 h-auto" />
+        <div className="lg:col-span-1 lg:-ml-20">
+          <p className="font-bold text-black mb-4">Kami Menerima</p>
+          <div className="grid grid-cols-5 gap-4">
+            <a href="https://www.bca.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={BCA} alt="BCA" className="w-16" />
             </a>
-            <a href="">
-              <img src={BNI} alt="Logo Pembayaran 2" className="w-14 h-auto" />
+            <a href="https://www.bni.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={BNI} alt="BNI" className="w-16" />
             </a>
-            <a href="">
-              <img src={BRI} alt="Logo Pembayaran 3" className="w-10 h-auto" />
+            <a href="https://www.bri.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={BRI} alt="BRI" className="w-12" />
             </a>
-            <a href="">
-              <img src={CIMB} alt="Logo Pembayaran 3" className="w-20 h-auto" />
+            <a href="https://www.bankmandiri.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={MANDIRI} alt="Mandiri" className="w-20" />
             </a>
-            <a href="">
-              <img
-                src={MANDIRI}
-                alt="Logo Pembayaran 3"
-                className="w-16 ml-2 -mt-2 h-auto"
-              />
+            <a href="https://www.linkaja.id" target="_blank" rel="noopener noreferrer">
+              <img src={LINKAJA} alt="LinkAja" className="w-9" />
             </a>
-            <a href="">
-              <img
-                src={LINKAJA}
-                alt="Logo Pembayaran 3"
-                className="w-8 ml-6 h-auto"
-              />
+            <a href="https://shopeepay.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={SPPAY} alt="ShopeePay" className="w-20" />
             </a>
-            <a href="">
-              <img
-                src={SPPAY}
-                alt="Logo Pembayaran 3"
-                className="w-16 h-auto"
-              />
+            <a href="https://www.ovo.id" target="_blank" rel="noopener noreferrer">
+              <img src={OVO} alt="OVO" className="w-16" />
             </a>
-            <a href="">
-              <img
-                src={OVO}
-                alt="Logo Pembayaran 3"
-                className="w-14 mt-2 h-auto"
-              />
+            <a href="https://www.gopay.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={GOPAY} alt="GoPay" className="w-20" />
             </a>
-            <a href="">
-              <img
-                src={GOPAY}
-                alt="Logo Pembayaran 3"
-                className="w-20 mt-3 h-auto"
-              />
+            <a href="https://www.dana.id" target="_blank" rel="noopener noreferrer">
+              <img src={DANA} alt="Dana" className="w-20" />
             </a>
-            <a href="">
-              <img
-                src={DANA}
-                alt="Logo Pembayaran 3"
-                className="w-20 mt-2 h-auto"
-              />
+            <a href="https://www.maybank.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={MAYBANK} alt="Maybank" className="w-16" />
             </a>
-            <a href="">
-              <img
-                src={MAYBANK}
-                alt="Logo Pembayaran 3"
-                className="w-14 ml-3 mt-1 h-auto"
-              />
+            <a href="https://www.visa.com" target="_blank" rel="noopener noreferrer">
+              <img src={VISA} alt="Visa" className="w-16" />
             </a>
-            <a href="">
-              <img
-                src={VISA}
-                alt="Logo Pembayaran 3"
-                className="w-14 mt-2 h-auto"
-              />
+            <a href="https://www.kredivo.com" target="_blank" rel="noopener noreferrer">
+              <img src={KREDIVO} alt="Kredivo" className="w-20" />
             </a>
-            <a href="">
-              <img
-                src={KREDIVO}
-                alt="Logo Pembayaran 3"
-                className="w-16 mt-2 h-auto"
-              />
+            <a href="https://www.indodana.com" target="_blank" rel="noopener noreferrer">
+              <img src={INDODANA} alt="Indodana" className="w-24" />
             </a>
-            <a href="">
-              <img
-                src={INDODANA}
-                alt="Logo Pembayaran 3"
-                className="w-24 h-auto"
-              />
-            </a>
-            <a href="">
-              <img
-                src={BSI}
-                alt="Logo Pembayaran 3"
-                className="w-14 mt-1 ml-2 h-auto"
-              />
+            <a href="https://www.bankbsi.co.id" target="_blank" rel="noopener noreferrer">
+              <img src={BSI} alt="BSI" className="w-16" />
             </a>
           </div>
 
           {/* Sosial Media */}
-          <p className="font-bold mb-4">Find Me</p>
+          <p className="font-bold mt-8 mb-4">Find Me</p>
           <div className="flex gap-2">
             <a href="">
               <img src={IG} alt="Find Me Logo" className="w-10 h-10 mt-1" />
@@ -225,7 +177,6 @@ const Footer = () => {
             <a href="">
               <img src={FB} alt="Find Me Logo" className="w-10 h-10 mt-1" />
             </a>
-            {/* Tambahkan lebih banyak logo sosial media jika diperlukan */}
           </div>
         </div>
       </div>

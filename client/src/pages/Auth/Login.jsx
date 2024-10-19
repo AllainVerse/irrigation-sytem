@@ -1,71 +1,123 @@
 import React from "react";
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:3000/login", {
-        email,
-        password,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <div className="h-screen flex justify-center items-center bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598]">
-      <div className="flex w-3/5 items-center">
+    <div className="h-screen bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598] flex justify-center items-center p-4">
+      {/* Tampilan mobile */}
+      <div className="lg:hidden flex flex-col justify-center items-center">
+        <img
+          src={Logo}
+          alt="Irrigo Logo"
+          className="w-[220px] h-auto -mb-5"
+        />
+        <h2 className="text-[22px] font-poppins font-semibold text-[#142423] mb-6 text-center">
+          Join Iriigo To Solve <br /> Your Irrigation
+        </h2>
+
+        <form
+          className="w-full max-w-md bg-[#6E9B69] p-6 rounded-[20px] shadow-lg"
+        >
+          <div className="mb-4">
+            <label
+              className="block text-black text-sm font-poppins font-semibold mb-2"
+              htmlFor="email"
+            >
+              Email Address
+            </label>
+            <input
+              id="email"
+              type="email"
+              className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-black text-sm font-poppins font-semibold mb-2"
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <Link
+              to="/register"
+              className="w-full bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] text-center"
+            >
+              Continue
+            </Link>
+          </div>
+        </form>
+
+        <div className="mt-4">
+          <p className="text-gray-700 text-center">
+            Create New Account?{" "}
+            <Link to="/login" className="text-[#3B8132] font-bold hover:underline">
+              Sign Up
+            </Link>
+          </p>
+        </div>
+      </div>
+
+      {/* Tampilan desktop */}
+      <div className="hidden lg:flex w-full max-w-6xl items-center">
         {/* Bagian kiri - logo */}
-        <div className="w-1/2 flex justify-end">
+        <div className="w-1/2 flex justify-center items-center">
           <img
             src={Logo}
             alt="Irrigo Logo"
-            className="w-[320px] h-[325px] transform -translate-x-40"
+            className="w-[320px] h-[325px]"
           />
         </div>
 
         {/* Garis pembatas */}
-        <div className="h-[510px] w-[2px]  bg-[#3B8132]" />
+        <div className="h-[510px] w-[2px] bg-[#3B8132] ml-7" />
 
         {/* Bagian kanan - form */}
-        <div className="w-1/2 flex flex-col justify-center items-start ml-10">
-          <h2 className="text-[22.5px] font-poppins font-semibold text-[#142423] -mb-10 -ml-[-130px]">
+        <div className="w-1/2 flex flex-col justify-center ml-16 items-start pl-10 relative">
+          <h2 className="text-[22.5px] font-poppins font-semibold text-[#142423] -mb-10">
             Join Irrigo to solve <br /> Your Irrigation
           </h2>
 
           {/* Kontainer kecil dengan tulisan Sign In */}
-          <div className="bg-[#6E9B69] rounded-t-[20px] w-[165px] h-[70px] flex items-center justify-center ml-[348.5px] -mb-[16px]">
+          <div className="-mb-6 ml-52 bg-[#6E9B69] rounded-t-[20px] w-[176px] h-[78px] flex items-center justify-center">
             <span className="text-black font-poppins font-semibold text-[25px]">
               Sign In
             </span>
           </div>
 
           <form
-            className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]"
-            onSubmit={handleSubmit}
+            className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg"
           >
             <div className="mb-4">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
                 htmlFor="email"
               >
-                Email Address
+                Email Addres
               </label>
               <input
                 id="email"
                 type="email"
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Email"
+                placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -88,32 +140,31 @@ const Login = () => {
               <div className="flex justify-end">
                 <a
                   className="mb-4 inline-block align-baseline font-medium text-sm text-black hover:text-blue-800"
-                  href="#"
+                  href="/register"
                 >
-                  Forgot Password?
+                  forget Password ?
                 </a>
               </div>
             </div>
+
+            {/* Tombol Sign In menjadi tautan ke halaman register */}
             <div className="flex items-center justify-between">
-              <Link to="/">
-                <Button
-                  className="w-[335px] bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
-                  type="button"
-                >
-                  Sign In
-                </Button>
+              <Link
+                to="/register"
+                className="w-full bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] text-center"
+              >
+                Sign In
               </Link>
             </div>
           </form>
-          <div className="mt-4 flex justify-end w-full ml-[10px]">
-            <p className="text-gray-700">
+
+          {/* Tulisan di bagian bawah */}
+          <div className="mt-4 w-full text-center">
+            <p className="text-gray-700 text-center mr-28">
               Create new account?{" "}
-              <a
-                href="/register"
-                className="text-[#3B8132] font-bold hover:underline"
-              >
+              <Link to="/register" className="text-[#3B8132] font-bold hover:underline">
                 Sign Up
-              </a>
+              </Link>
             </p>
           </div>
         </div>

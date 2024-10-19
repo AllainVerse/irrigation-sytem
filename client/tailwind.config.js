@@ -8,6 +8,12 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        lilita: ['Lilita One', 'cursive'],
+        Inter: ['Inter', 'sans-serif'],
+        instrument: ['Instrument Sans', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

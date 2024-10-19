@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -25,46 +25,130 @@ const Register = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598]">
-      <div className="flex w-3/5 items-center">
+    <div className="h-screen bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598] flex justify-center items-center p-4">
+      {/* Tampilan mobile */}
+      <div className="lg:hidden flex flex-col justify-center items-center">
+        <img
+          src={Logo}
+          alt="Irrigo Logo"
+          className="w-[220px] h-auto -mb-5"
+        />
+        <h2 className="text-[22px] font-poppins font-semibold text-[#142423] mb-6 text-center">
+          Join Irrigo to solve <br /> Your Irrigation
+        </h2>
+
+        <form
+          className="w-full max-w-md bg-[#6E9B69] p-6 rounded-[20px] shadow-lg"
+          onSubmit={handleSubmit}
+        >
+          <div className="mb-4">
+            <label
+              className="block text-black text-sm font-poppins font-semibold mb-2"
+              htmlFor="fullname-mobile"
+            >
+              Full Name
+            </label>
+            <input
+              id="fullname-mobile"
+              type="text"
+              value={name}
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
+              className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-black text-sm font-poppins font-semibold mb-2"
+              htmlFor="email-mobile"
+            >
+              Email Address
+            </label>
+            <input
+              id="email-mobile"
+              type="email"
+              className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-black text-sm font-poppins font-semibold mb-2"
+              htmlFor="password-mobile"
+            >
+              Password
+            </label>
+            <input
+              id="password-mobile"
+              type="password"
+              className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <Button
+              className="w-full bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Continue
+            </Button>
+          </div>
+        </form>
+
+        <div className="mt-4">
+          <p className="text-gray-700 text-center">
+            Has already account?{" "}
+            <Link to="/login" className="text-[#3B8132] font-bold hover:underline">
+              Sign In
+            </Link>
+          </p>
+        </div>
+      </div>
+
+      {/* Tampilan desktop */}
+      <div className="hidden lg:flex w-full max-w-6xl items-center">
         {/* Bagian kiri - logo */}
-        <div className="w-1/2 flex justify-end">
+        <div className="w-1/2 flex justify-center items-center">
           <img
             src={Logo}
             alt="Irrigo Logo"
-            className="w-[320px] h-[325px] transform -translate-x-40"
+            className="w-[320px] h-[325px]"
           />
         </div>
 
         {/* Garis pembatas */}
-        <div className="h-[510px] w-[2px]  bg-[#3B8132]" />
+        <div className="h-[510px] w-[2px] bg-[#3B8132] ml-7" />
 
         {/* Bagian kanan - form */}
-        <div className="w-1/2 flex flex-col justify-center items-start ml-10">
-          <h2 className="text-[22.5px] font-poppins font-semibold text-[#142423] -mb-10 -ml-[-130px]">
+        <div className="w-1/2 flex flex-col justify-center items-start pl-10 ml-16">
+          <h2 className="text-[22.5px] font-poppins font-semibold text-[#142423] -mb-10">
             Join Irrigo to solve <br /> Your Irrigation
           </h2>
 
-          {/* Kontainer kecil dengan tulisan Sign In */}
-          <div className="bg-[#6E9B69] rounded-t-[20px] w-[165px] h-[70px] flex items-center justify-center ml-[348.5px] -mb-[16px]">
+          {/* Kontainer kecil dengan tulisan Sign Up */}
+          <div className="-mb-6 ml-52 bg-[#6E9B69] rounded-t-[20px] w-[176px] h-[78px] flex items-center justify-center">
             <span className="text-black font-poppins font-semibold text-[25px]">
               Sign Up
             </span>
           </div>
 
           <form
-            className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg ml-[130px]"
+            className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg"
             onSubmit={handleSubmit}
           >
             <div className="mb-4">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
-                htmlFor="fullname"
+                htmlFor="fullname-desktop"
               >
                 Full Name
               </label>
               <input
-                id="fullname"
+                id="fullname-desktop"
                 type="text"
                 value={name}
                 placeholder="Name"
@@ -75,12 +159,12 @@ const Register = () => {
             <div className="mb-4">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
-                htmlFor="email"
+                htmlFor="email-desktop"
               >
                 Email Address
               </label>
               <input
-                id="email"
+                id="email-desktop"
                 type="email"
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Email"
@@ -91,12 +175,12 @@ const Register = () => {
             <div className="mb-6">
               <label
                 className="block text-black text-sm font-poppins font-semibold mb-2"
-                htmlFor="password"
+                htmlFor="password-desktop"
               >
                 Password
               </label>
               <input
-                id="password"
+                id="password-desktop"
                 type="password"
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Password"
@@ -105,25 +189,21 @@ const Register = () => {
               />
             </div>
             <div className="flex items-center justify-between">
-              <Link to="/login">
-                <Button
-                  className="w-[335px] bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
-                  type="submit"
-                >
-                  Continue
-                </Button>
-              </Link>
+              <Button
+                className="w-full bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Continue
+              </Button>
             </div>
           </form>
-          <div className="mt-4 flex justify-end w-full ml-[10px]">
-            <p className="text-gray-700">
+
+          <div className="mt-4 w-full text-center">
+            <p className="text-gray-700 mr-28">
               Has already account?{" "}
-              <a
-                href="/login"
-                className="text-[#3B8132] font-bold hover:underline"
-              >
+              <Link to="/login" className="text-[#3B8132] font-bold hover:underline">
                 Sign In
-              </a>
+              </Link>
             </p>
           </div>
         </div>
