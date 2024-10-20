@@ -96,7 +96,7 @@ const Login = () => {
             Join Irrigo to solve <br /> Your Irrigation
           </h2>
 
-          {/* Kontainer kecil dengan tulisan Sign In */}
+          {/* Kontainer Sign In */}
           <div className="-mb-6 ml-52 bg-[#6E9B69] rounded-t-[20px] w-[176px] h-[78px] flex items-center justify-center">
             <span className="text-black font-poppins font-semibold text-[25px]">
               Sign In
@@ -146,8 +146,7 @@ const Login = () => {
                 </a>
               </div>
             </div>
-
-            {/* Tombol Sign In menjadi tautan ke halaman register */}
+            
             <div className="flex items-center justify-between">
               <Link
                 to="/register"
@@ -158,7 +157,6 @@ const Login = () => {
             </div>
           </form>
 
-          {/* Tulisan di bagian bawah */}
           <div className="mt-4 w-full text-center">
             <p className="text-gray-700 text-center mr-28">
               Create new account?{" "}
