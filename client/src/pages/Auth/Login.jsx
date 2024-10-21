@@ -1,37 +1,61 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
+// import { getAuth } from "../../services/auth.service";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
+  
+    try {
+      const response = await axios.post('http://localhost:3000/login', {
+        email,
+        password,
+      });
+  
+      console.log(response); // Check the entire response object
+      console.log(response.data); // Check the data field
+  
+      const { token } = response.data; // Make sure `token` exists in response
+  
+      if (token) {
+        localStorage.setItem('token', token);
+        window.location.href = '/dashboard';
+      } else {
+        throw new Error('Login failed: token not provided');
+      }
+    } catch (err) {
+      console.error(err); // Log the error for debugging
+      setError('Invalid login credentials or server error');
+    }
+  };
+  
 
   return (
     <div className="h-screen bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598] flex justify-center items-center p-4">
       {/* Tampilan mobile */}
       <div className="lg:hidden flex flex-col justify-center items-center">
-        <img
-          src={Logo}
-          alt="Irrigo Logo"
-          className="w-[220px] h-auto -mb-5"
-        />
+        <img src={Logo} alt="Irrigo Logo" className="w-[220px] h-auto -mb-5" />
         <h2 className="text-[22px] font-poppins font-semibold text-[#142423] mb-6 text-center">
-          Join Iriigo To Solve <br /> Your Irrigation
+          Join Irrigo To Solve <br /> Your Irrigation
         </h2>
 
-        <form
-          className="w-full max-w-md bg-[#6E9B69] p-6 rounded-[20px] shadow-lg"
-        >
+        <form className="w-full max-w-md bg-[#6E9B69] p-6 rounded-[20px] shadow-lg" onSubmit={handleLogin}>
           <div className="mb-4">
             <label
               className="block text-black text-sm font-poppins font-semibold mb-2"
-              htmlFor="email"
+              htmlFor="email-mobile"
             >
               Email Address
             </label>
             <input
-              id="email"
+              id="email-mobile"
               type="email"
               className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Email"
@@ -42,12 +66,12 @@ const Login = () => {
           <div className="mb-6">
             <label
               className="block text-black text-sm font-poppins font-semibold mb-2"
-              htmlFor="password"
+              htmlFor="password-mobile"
             >
               Password
             </label>
             <input
-              id="password"
+              id="password-mobile"
               type="password"
               className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Password"
@@ -57,19 +81,22 @@ const Login = () => {
           </div>
 
           <div className="flex items-center justify-between">
-            <Link
-              to="/register"
+            <button
+              type="submit"
               className="w-full bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] text-center"
             >
-              Continue
-            </Link>
+              Sign In
+            </button>
           </div>
         </form>
 
         <div className="mt-4">
           <p className="text-gray-700 text-center">
             Create New Account?{" "}
-            <Link to="/login" className="text-[#3B8132] font-bold hover:underline">
+            <Link
+              to="/register"
+              className="text-[#3B8132] font-bold hover:underline"
+            >
               Sign Up
             </Link>
           </p>
@@ -80,11 +107,7 @@ const Login = () => {
       <div className="hidden lg:flex w-full max-w-6xl items-center">
         {/* Bagian kiri - logo */}
         <div className="w-1/2 flex justify-center items-center">
-          <img
-            src={Logo}
-            alt="Irrigo Logo"
-            className="w-[320px] h-[325px]"
-          />
+          <img src={Logo} alt="Irrigo Logo" className="w-[320px] h-[325px]" />
         </div>
 
         {/* Garis pembatas */}
@@ -105,6 +128,7 @@ const Login = () => {
 
           <form
             className="w-full max-w-sm bg-[#6E9B69] p-6 rounded-[20px] shadow-lg"
+            onSubmit={handleLogin}
           >
             <div className="mb-4">
               <label
@@ -119,7 +143,7 @@ const Login = () => {
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Email Address"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)} required
               />
             </div>
             <div className="mb-6">
@@ -135,7 +159,7 @@ const Login = () => {
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)} required
               />
               <div className="flex justify-end">
                 <a
@@ -147,14 +171,16 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Tombol Sign In menjadi tautan ke halaman register */}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+
+            {/* Tombol Sign In */}
             <div className="flex items-center justify-between">
-              <Link
-                to="/register"
+              <button
+                type="submit"
                 className="w-full bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] text-center"
               >
                 Sign In
-              </Link>
+              </button>
             </div>
           </form>
 
@@ -162,7 +188,10 @@ const Login = () => {
           <div className="mt-4 w-full text-center">
             <p className="text-gray-700 text-center mr-28">
               Create new account?{" "}
-              <Link to="/register" className="text-[#3B8132] font-bold hover:underline">
+              <Link
+                to="/register"
+                className="text-[#3B8132] font-bold hover:underline"
+              >
                 Sign Up
               </Link>
             </p>
