@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Logo from "../assets/logo-removebg-preview.png";
 import Cloudy from "../assets/cloudy.png";
 import UserProfile from "../assets/logo-user.png";
-import SearchIcon from "../assets/search.png"; // Ganti dengan ikon pencarian baru
+import SearchIcon from "../assets/search.png"; 
 import Footer from "../components/Footer/Footer";
 
 const Log = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false); // State untuk toggle menu
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
@@ -99,9 +99,9 @@ const Log = () => {
                   className="bg-white text-black p-2 pl-4 rounded-full shadow-md text-xs md:text-sm w-56 md:w-64"
                 />
                 <img
-                  src={SearchIcon} // Gunakan ikon pencarian baru
+                  src={SearchIcon}
                   alt="Search Icon"
-                  className="absolute right-3 top-3 w-4 h-4" // Ukuran ikon
+                  className="absolute right-3 top-3 w-4 h-4"
                 />
               </div>
               <div className="relative">
@@ -111,9 +111,9 @@ const Log = () => {
                   className="bg-white text-black p-2 pl-4 rounded-full shadow-md text-xs md:text-sm w-56 md:w-64"
                 />
                 <img
-                  src={SearchIcon} // Gunakan ikon pencarian baru
+                  src={SearchIcon} 
                   alt="Search Icon"
-                  className="absolute right-3 top-3 w-4 h-4" // Ukuran ikon
+                  className="absolute right-3 top-3 w-4 h-4"
                 />
               </div>
             </div>
@@ -154,7 +154,7 @@ const Log = () => {
       </section>
 
       {/* Footer */}
-      <Footer /> {/* Tambahkan Footer melalui import */}
+      <Footer />
     </div>
   );
 };
