@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
 const plotRoutes = require("./routes/plotRoutes");
 const plantRoutes = require("./routes/plantRoutes");
+const scheduleRoutes = require("./routes/scheduleRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use("/", authRoutes);
 app.use("/plots", plotRoutes);
 app.use("/plots", plantRoutes);
+app.use("/plots", scheduleRoutes);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize("irrigation_system", "postgres", "postgres", {
+const sequelize = new Sequelize("irrigation_system", "postgres", "admin123", {
   host: "localhost",
   dialect: "postgres",
   logging: false,
@@ -220,6 +220,49 @@ const PlantNeeds = sequelize.define(
   }
 );
 
+// Model untuk Irrigation Schedule
+const Schedule = sequelize.define('Schedule', {
+  schedule_id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'user_id',
+    },
+    onDelete: 'CASCADE',
+  },
+  plot_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'plots',
+      key: 'plot_id',
+    },
+    onDelete: 'CASCADE',
+  },
+  start_time: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  end_time: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  frequency: {
+    type: DataTypes.ENUM('daily', 'weekly', 'monthly'),
+    allowNull: false,
+    defaultValue: 'daily',
+  },
+}, {
+  tableName: 'irrigation_schedule',
+  timestamps: false,
+});
+
 // Define relationships (associations)
 User.hasMany(Plot, { foreignKey: "user_id", onDelete: "CASCADE" });
 Plot.belongsTo(User, { foreignKey: "user_id" });
@@ -233,6 +276,12 @@ SensorData.belongsTo(Plot, { foreignKey: "plot_id" });
 Plot.hasOne(PlantNeeds, { foreignKey: "plot_id", onDelete: "CASCADE" });
 PlantNeeds.belongsTo(Plot, { foreignKey: "plot_id" });
 
+User.hasMany(Schedule, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+Schedule.belongsTo(User, { foreignKey: 'user_id' });
+
+Plot.hasMany(Schedule, { foreignKey: 'plot_id', onDelete: 'CASCADE' });
+Schedule.belongsTo(Plot, { foreignKey: 'plot_id' });
+
 // Sinkronasi model dengan database
 sequelize.sync();
 
@@ -244,4 +293,5 @@ module.exports = {
   Device,
   SensorData,
   PlantNeeds,
+  Schedule,
 };
