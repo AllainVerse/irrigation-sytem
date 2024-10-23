@@ -9,8 +9,6 @@ const router = express.Router();
 const checkRole = require("../middlewares/checkRole");
 const authenticateToken = require("../middlewares/authenticateToken");
 
-
-
 // Farmer bisa membuat schedule
 router.post(
   "/:plot_id/schedule",
@@ -21,15 +19,15 @@ router.post(
 
 // farmer dan admin bisa melihat schedule
 router.get(
-  "/:plot_id/scheduleId",
+  "/:plot_id/schedule/:schedule_id",
   authenticateToken,
-  checkRole(["farmer", "admin"]),
+  checkRole(["farmer"]),
   getSchedules
 );
 
 // Farmer bisa update schedule
 router.put(
-  "/:plot_id/:scheduleId",
+  "/:plot_id/schedule/:schedule_id",
   authenticateToken,
   checkRole(["farmer"]),
   updateSchedule
@@ -37,7 +35,7 @@ router.put(
 
 // Farmer bisa menghapus schedule
 router.delete(
-  "/:plot_id/:scheduleId",
+  "/:plot_id/schedule/:schedule_id",
   authenticateToken,
   checkRole(["farmer"]),
   deleteSchedule

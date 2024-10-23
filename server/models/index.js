@@ -221,47 +221,92 @@ const PlantNeeds = sequelize.define(
 );
 
 // Model untuk Irrigation Schedule
-const Schedule = sequelize.define('Schedule', {
-  schedule_id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'users',
-      key: 'user_id',
+const Schedule = sequelize.define(
+  "Schedule",
+  {
+    schedule_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
-    onDelete: 'CASCADE',
-  },
-  plot_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'plots',
-      key: 'plot_id',
+    plot_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "plots",
+        key: "plot_id",
+      },
+      onDelete: "CASCADE",
     },
-    onDelete: 'CASCADE',
+    start_time: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    end_time: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    frequency: {
+      type: DataTypes.ENUM("daily", "weekly", "monthly"),
+      allowNull: false,
+      defaultValue: "daily",
+    },
   },
-  start_time: {
-    type: DataTypes.DATE,
-    allowNull: false,
+  {
+    tableName: "irrigation_schedule",
+    timestamps: false,
+  }
+);
+
+const IrrigationLog = sequelize.define(
+  "irrigationLog",
+  {
+    log_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    schedule_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "irrigation_schedule",
+        key: "schedule_id",
+      },
+      onDelete: "CASCADE",
+    },
+    plot_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "plots",
+        key: "plot_id",
+      },
+      onDelete: "CASCADE",
+    },
+    log_date: {
+      type: DataTypes.DATEONLY, // Store only the date (YYYY-MM-DD)
+      allowNull: false,
+    },
+    start_time: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    end_time: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    water_used: {
+      type: DataTypes.FLOAT, // Menggunakan float untuk liter air
+      allowNull: false,
+      defaultValue: 0, // Default 0, akan dihitung kemudian
+    },
   },
-  end_time: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  frequency: {
-    type: DataTypes.ENUM('daily', 'weekly', 'monthly'),
-    allowNull: false,
-    defaultValue: 'daily',
-  },
-}, {
-  tableName: 'irrigation_schedule',
-  timestamps: false,
-});
+  {
+    tableName: "irrigation_log",
+    timestamps: false,
+  }
+);
 
 // Define relationships (associations)
 User.hasMany(Plot, { foreignKey: "user_id", onDelete: "CASCADE" });
@@ -276,11 +321,17 @@ SensorData.belongsTo(Plot, { foreignKey: "plot_id" });
 Plot.hasOne(PlantNeeds, { foreignKey: "plot_id", onDelete: "CASCADE" });
 PlantNeeds.belongsTo(Plot, { foreignKey: "plot_id" });
 
-User.hasMany(Schedule, { foreignKey: 'user_id', onDelete: 'CASCADE' });
-Schedule.belongsTo(User, { foreignKey: 'user_id' });
+Plot.hasMany(Schedule, { foreignKey: "plot_id", onDelete: "CASCADE" });
+Schedule.belongsTo(Plot, { foreignKey: "plot_id" });
 
-Plot.hasMany(Schedule, { foreignKey: 'plot_id', onDelete: 'CASCADE' });
-Schedule.belongsTo(Plot, { foreignKey: 'plot_id' });
+Schedule.hasMany(IrrigationLog, {
+  foreignKey: "schedule_id",
+  onDelete: "CASCADE",
+});
+IrrigationLog.belongsTo(Schedule, { foreignKey: "schedule_id" });
+
+Plot.hasMany(IrrigationLog, { foreignKey: "plot_id", onDelete: "CASCADE" });
+IrrigationLog.belongsTo(Plot, { foreignKey: "plot_id" });
 
 // Sinkronasi model dengan database
 sequelize.sync();
@@ -294,4 +345,5 @@ module.exports = {
   SensorData,
   PlantNeeds,
   Schedule,
+  IrrigationLog,
 };
