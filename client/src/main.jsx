@@ -8,6 +8,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import "./index.css";
 import Log from "@/pages/Log";
+import Mainboard from "@/pages/Mainboard";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
       path: "/Log",
       element: <Log />,  // Halaman Irrigation Log
     },
-  
+  {
+    path: "Mainboard",
+    element: <Mainboard /> //Halaman Utama (Mainboard)
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
