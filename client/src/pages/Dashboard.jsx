@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "@/components/Navbar/Navbar";
 import Pilih from "../components/Pilih/Pilih";
 
-const Dashboard = () => {clea
+const Dashboard = () => {
   return (
     <>
       <Navbar />
