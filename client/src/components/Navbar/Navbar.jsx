@@ -2,10 +2,7 @@ import React from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
 import logo from "../../assets/logo-new.png";
 import { NavbarMenu } from "../../mockData/data";
-import { FaDumbbell } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
-import { CiSearch } from "react-icons/ci";
-import { PiShoppingCartThin } from "react-icons/pi";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
