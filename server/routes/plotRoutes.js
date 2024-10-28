@@ -4,14 +4,7 @@ const {
   getPlots,
   updatePlot,
   deletePlot,
-  predictPlant,
 } = require("../controllers/plotController");
-const {
-  createDevice,
-  updateDevice,
-  deleteDevice,
-  getDevices,
-} = require("../controllers/deviceController");
 const checkRole = require("../middlewares/checkRole");
 const authenticateToken = require("../middlewares/authenticateToken");
 
@@ -24,35 +17,5 @@ router.get("/", authenticateToken, checkRole(["farmer", "admin"]), getPlots);
 router.post("/", authenticateToken, checkRole(["admin"]), createPlot);
 router.put("/:plot_id", authenticateToken, checkRole(["admin"]), updatePlot);
 router.delete("/:plot_id", authenticateToken, checkRole(["admin"]), deletePlot);
-router.post(
-  "/:plot_id/predict",
-  authenticateToken,
-  checkRole(["admin", "farmer"]),
-  predictPlant
-);
-router.post(
-  "/:plot_id/devices/",
-  authenticateToken,
-  checkRole(["admin"]),
-  createDevice
-);
-router.get(
-  "/:plot_id/devices/",
-  authenticateToken,
-  checkRole(["admin", "farmer"]),
-  getDevices
-);
-router.put(
-  "/:plot_id/devices/:device_id",
-  authenticateToken,
-  checkRole(["admin"]),
-  updateDevice
-);
-router.delete(
-  "/:plot_id/devices/:device_id",
-  authenticateToken,
-  checkRole(["admin"]),
-  deleteDevice
-);
 
 module.exports = router;

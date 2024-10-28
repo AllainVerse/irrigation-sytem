@@ -22,17 +22,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,  // Halaman Login
+    element: <Login />, // Halaman Login
   },
   {
     path: "/register",
-    element: <Register />,  // Halaman Register
-  }, 
+    element: <Register />, // Halaman Register
+  },
   {
-      path: "/Log",
-      element: <Log />,  // Halaman Irrigation Log
-    },
-  
+    path: "/Log",
+    element: <Log />, // Halaman Irrigation Log
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

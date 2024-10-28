@@ -25,7 +25,7 @@ exports.createPlantNeed = async (req, res) => {
 exports.getPlantNeeds = async (req, res) => {
   const { plot_id } = req.params;
   try {
-    const plantNeeds = await PlantNeeds.findAll({
+    const plantNeeds = await PlantNeeds.findOne({
       where: {
         plot_id: plot_id,
       },
