@@ -22,11 +22,12 @@ const Login = () => {
       console.log(response); // Check the entire response object
       console.log(response.data); // Check the data field
   
-      const { token } = response.data; // Make sure `token` exists in response
+      const { token, name } = response.data; // Make sure `token` exists in response
   
       if (token) {
         localStorage.setItem('token', token);
-        window.location.href = '/dashboard';
+        localStorage.setItem('name', name);
+        window.location.href = '/mainboard';
       } else {
         throw new Error('Login failed: token not provided');
       }
@@ -35,7 +36,6 @@ const Login = () => {
       setError('Invalid login credentials or server error');
     }
   };
-  
 
   return (
     <div className="h-screen bg-gradient-to-bl from-[#ABB598] via-[#DFEDC1] to-[#ABB598] flex justify-center items-center p-4">
@@ -46,7 +46,10 @@ const Login = () => {
           Join Irrigo To Solve <br /> Your Irrigation
         </h2>
 
-        <form className="w-full max-w-md bg-[#6E9B69] p-6 rounded-[20px] shadow-lg" onSubmit={handleLogin}>
+        <form
+          className="w-full max-w-md bg-[#6E9B69] p-6 rounded-[20px] shadow-lg"
+          onSubmit={handleLogin}
+        >
           <div className="mb-4">
             <label
               className="block text-black text-sm font-poppins font-semibold mb-2"
@@ -143,7 +146,8 @@ const Login = () => {
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Email Address"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)} required
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="mb-6">
@@ -159,7 +163,8 @@ const Login = () => {
                 className="shadow appearance-none border rounded-[12px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)} required
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <div className="flex justify-end">
                 <a
@@ -171,7 +176,7 @@ const Login = () => {
               </div>
             </div>
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
 
             {/* Tombol Sign In */}
             <div className="flex items-center justify-between">
