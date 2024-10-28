@@ -1,9 +1,9 @@
 const express = require("express");
-const { predictPlants, getDataPlot } = require("../controllers/dataController");
+const { predictPlant, getDataPlot } = require("../controllers/dataController");
 const checkRole = require("../middlewares/checkRole");
 const authenticateToken = require("../middlewares/authenticateToken");
 
-const router = express.router();
+const router = express.Router();
 
 router.post(
   "/:plot_id/predict",

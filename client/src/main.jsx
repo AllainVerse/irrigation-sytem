@@ -9,6 +9,7 @@ import Register from "./pages/Auth/Register";
 import "./index.css";
 import Log from "@/pages/Log";
 import Mainboard from "@/pages/Mainboard";
+import Admin from "./pages/Admin/Admin";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
   {
     path: "/Log",
     element: <Log />, // Halaman Irrigation Log
+  },
+  {
+    path: "/Mainboard",
+    element: <Mainboard />, // Mainboard
+  },
+  {
+    path: "/Admin",
+    element: <Admin />, // Mainboard
   },
 ]);
 

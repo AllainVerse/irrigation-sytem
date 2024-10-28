@@ -5,35 +5,35 @@ import axios from "axios";
 // import { getAuth } from "../../services/auth.service";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
-  
+
     try {
-      const response = await axios.post('http://localhost:3000/login', {
+      const response = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
-  
+
       console.log(response); // Check the entire response object
       console.log(response.data); // Check the data field
-  
+
       const { token, name } = response.data; // Make sure `token` exists in response
-  
+
       if (token) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('name', name);
-        window.location.href = '/mainboard';
+        localStorage.setItem("token", token);
+        localStorage.setItem("name", name);
+        window.location.href = "/Mainboard";
       } else {
-        throw new Error('Login failed: token not provided');
+        throw new Error("Login failed: token not provided");
       }
     } catch (err) {
       console.error(err); // Log the error for debugging
-      setError('Invalid login credentials or server error');
+      setError("Invalid login credentials or server error");
     }
   };
 

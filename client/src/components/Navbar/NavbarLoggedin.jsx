@@ -11,7 +11,7 @@ const NavbarLoggedin = () => {
   return (
     <>
       {/* Navbar */}
-      <header className="bg-[rgba(171,181,152,0.38)] backdrop-filter backdrop-blur-md p-2 flex justify-between items-center h-20 sticky top-0 z-50">
+      <header className="bg-[rgba(171,181,152,0.38)] backdrop-filter backdrop-blur-md p-2 flex justify-between items-center h-24 sticky top-0 z-50">
         {/* Logo dan Nama Aplikasi */}
         <div className="flex items-center">
           <img

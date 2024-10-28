@@ -8,7 +8,7 @@ const {
 const checkRole = require("../middlewares/checkRole");
 const authenticateToken = require("../middlewares/authenticateToken");
 
-const router = express.router();
+const router = express.Router();
 
 router.post(
   "/:plot_id/devices/",
