@@ -10,6 +10,7 @@ import "./index.css";
 import Log from "@/pages/Log";
 import Mainboard from "@/pages/Mainboard";
 import Admin from "./pages/Admin/Admin";
+import DataForm from "./pages/DataForm";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/Admin",
     element: <Admin />, // Mainboard
+  },
+  {
+    path: "/DataForm",
+    element: <DataForm />, // Mainboard
   },
 ]);
 
