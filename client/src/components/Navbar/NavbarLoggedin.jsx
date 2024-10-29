@@ -81,7 +81,7 @@ const NavbarLoggedin = () => {
           >
             Articles
           </a>
-          <a
+          {/* <a
             href="#"
             className="block md:inline-block mx-auto py-2 md:py-0 text-[#DFEDC0] font-inter font-bold transition duration-700ms ease-in-out hover:text-[#ffffff] hover:underline hover:underline-offset-4"
             onClick={() => {
@@ -91,7 +91,7 @@ const NavbarLoggedin = () => {
             }}
           >
             Logout
-          </a>
+          </a> */}
         </nav>
 
         {/* Informasi Cuaca dan Profil Pengguna */}

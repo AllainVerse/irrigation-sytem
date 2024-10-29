@@ -8,6 +8,8 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import LogAdmin from "./LogAdmin";
 import PlotConfig from "./PlotConfig";
+import SensorConfig from "./SensorConfig";
+
 const Admin = () => {
   const [activePage, setActivePage] = useState("Admin"); // State halaman aktif
   const [open, setOpen] = useState(true);
@@ -15,7 +17,7 @@ const Admin = () => {
   const menus = [
     { name: "Irrigation Log", icon: MdOutlineDashboard },
     { name: "Plot Configuration", icon: AiOutlineUser },
-    { name: "messages", icon: FiMessageSquare },
+    { name: "Sensor Configuration", icon: FiMessageSquare },
     { name: "analytics", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", icon: FiFolder },
     { name: "Cart", icon: FiShoppingCart },
@@ -67,6 +69,7 @@ const Admin = () => {
         <Navbar sidebarOpen={open} />
 
         {/* Content Area */}
+        <div className="p-4">
         <div>
           {activePage === "Irrigation Log" ? (
             <LogAdmin />
@@ -80,6 +83,14 @@ const Admin = () => {
           ) : (
             null
           )}
+        </div>
+        <div>
+          {activePage === "Sensor Configuration" ? (
+            <SensorConfig />
+          ) : (
+            null
+          )}
+        </div>
         </div>
       </div>
     </div>

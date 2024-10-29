@@ -1,7 +1,7 @@
 import React from "react";
 import SearchIcon from "../../assets/search.png";
 
-const PlotConfig = () => {
+const SensorConfig = () => {
   return (
     <section className="flex flex-col md:flex-row items-start justify-center py-8 md:py-10 gap-4 mb-10">
       {/* Left Section - Table */}
@@ -13,7 +13,7 @@ const PlotConfig = () => {
           <div className="relative mt-4 md:mt-0">
             <input
               type="text"
-              placeholder="Cari Petak"
+              placeholder="Cari Sensor"
               className="bg-white text-black p-2 pl-4 rounded-full shadow-md text-xs md:text-sm w-56 md:w-64"
             />
             <img
@@ -32,13 +32,7 @@ const PlotConfig = () => {
                 No.
               </th>
               <th className="py-2 px-2 md:px-3 font-poppins font-medium">
-                Nama Petak Lahan
-              </th>
-              <th className="py-2 px-2 md:px-3 font-poppins font-medium">
-                Luas Area
-              </th>
-              <th className="py-2 px-2 md:px-3 font-poppins font-medium">
-                Options
+                Nama Sensor
               </th>
             </tr>
           </thead>
@@ -46,41 +40,14 @@ const PlotConfig = () => {
             <tr className="border-b border-black">
               <td className="py-2 px-2 md:px-3 font-poppins">1.</td>
               <td className="py-2 px-2 md:px-3 font-poppins">Petak 1</td>
-              <td className="py-2 px-2 md:px-3 font-poppins">1000 m²</td>
-              <td className="py-2 px-2 md:px-3 font-poppins">
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md mr-2">
-                  Edit
-                </button>
-                <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md">
-                  Delete
-                </button>
-              </td>
             </tr>
             <tr className="border-b border-black">
               <td className="py-2 px-2 md:px-3 font-poppins">2.</td>
               <td className="py-2 px-2 md:px-3 font-poppins">Petak 2</td>
-              <td className="py-2 px-2 md:px-3 font-poppins">1000 m²</td>
-              <td className="py-2 px-2 md:px-3 font-poppins">
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md mr-2">
-                  Edit
-                </button>
-                <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md">
-                  Delete
-                </button>
-              </td>
             </tr>
             <tr className="border-b border-black">
               <td className="py-2 px-2 md:px-3 font-poppins">3.</td>
               <td className="py-2 px-2 md:px-3 font-poppins">Petak 3</td>
-              <td className="py-2 px-2 md:px-3 font-poppins">1000 m²</td>
-              <td className="py-2 px-2 md:px-3 font-poppins">
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md mr-2">
-                  Edit
-                </button>
-                <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md">
-                  Delete
-                </button>
-              </td>
             </tr>
           </tbody>
         </table>
@@ -93,19 +60,11 @@ const PlotConfig = () => {
         </h2>
         <form className="flex flex-col gap-3">
           <label htmlFor="plotName" className="font-poppins text-black">
-            Nama Petak
+            Nama Sensor
           </label>
           <input
             type="text"
-            placeholder="Nama Petak Lahan"
-            className="p-2 rounded-xl bg-white text-black border border-gray-300"
-          />
-          <label htmlFor="plotName" className="font-poppins text-black">
-            Luas Area
-          </label>
-          <input
-            type="text"
-            placeholder="Luas Area"
+            placeholder="Nama Sensor"
             className="p-2 rounded-xl bg-white text-black border border-gray-300"
           />
           <div className="flex justify-end">
@@ -122,4 +81,4 @@ const PlotConfig = () => {
   );
 };
 
-export default PlotConfig;
+export default SensorConfig;
