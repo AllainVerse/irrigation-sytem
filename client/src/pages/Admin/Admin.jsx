@@ -7,13 +7,14 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import LogAdmin from "./LogAdmin";
+import PlotConfig from "./PlotConfig";
 const Admin = () => {
   const [activePage, setActivePage] = useState("Admin"); // State halaman aktif
   const [open, setOpen] = useState(true);
 
   const menus = [
-    { name: "dashboard", icon: MdOutlineDashboard },
-    { name: "user", icon: AiOutlineUser },
+    { name: "Irrigation Log", icon: MdOutlineDashboard },
+    { name: "Plot Configuration", icon: AiOutlineUser },
     { name: "messages", icon: FiMessageSquare },
     { name: "analytics", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", icon: FiFolder },
@@ -66,14 +67,19 @@ const Admin = () => {
         <Navbar sidebarOpen={open} />
 
         {/* Content Area */}
-        <div className="p-4  mt-4">
-          {/* Kotak Merah */}
-          {activePage === "dashboard" ? (
+        <div>
+          {activePage === "Irrigation Log" ? (
             <LogAdmin />
           ) : (
-            <h1>Selamat datang di halaman {activePage}</h1>
+            null
           )}
-          {/* Menampilkan Log jika halaman aktif adalah dashboard */}
+        </div>
+        <div>
+          {activePage === "Plot Configuration" ? (
+            <PlotConfig />
+          ) : (
+            null
+          )}
         </div>
       </div>
     </div>
