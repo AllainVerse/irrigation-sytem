@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { TokenBlacklist } = require("../models");
-const SECRET_KEY = "s3cr3tK3y!@#$%^&*()_+VERY_SECRET";
 
 // Promisify jwt.verify to use async/await
 const verifyToken = promisify(jwt.verify);
@@ -16,7 +15,7 @@ const authenticateToken = async (req, res, next) => {
     // Run blacklist check and token verification in parallel
     const [blacklistedToken, decoded] = await Promise.all([
       TokenBlacklist.findOne({ where: { token } }),
-      verifyToken(token, SECRET_KEY),
+      verifyToken(token, process.env.SECRET_KEY),
     ]);
 
     if (blacklistedToken) {

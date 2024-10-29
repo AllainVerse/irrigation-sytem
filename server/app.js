@@ -8,6 +8,9 @@ const plantRoutes = require("./routes/plantRoutes");
 const scheduleRoutes = require("./routes/scheduleRoutes");
 const cors = require("cors");
 
+require("dotenv").config();
+const db = require("./models"); // Pastikan ini merujuk pada folder models tempat sequelize instance berada
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());

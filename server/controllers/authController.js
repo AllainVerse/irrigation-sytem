@@ -4,7 +4,6 @@ const crypto = require("crypto");
 const { User } = require("../models");
 const { TokenBlacklist } = require("../models");
 const { Op } = require("sequelize");
-const SECRET_KEY = "s3cr3tK3y!@#$%^&*()_+VERY_SECRET";
 
 // Register user
 exports.register = async (req, res) => {
@@ -43,7 +42,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign(
       { id: user.user_id, email: user.email, role: user.role },
-      SECRET_KEY,
+      process.env.SECRET_KEY,
       {
         expiresIn: "1h",
       }
