@@ -11,6 +11,7 @@ import Log from "@/pages/Log";
 import Mainboard from "@/pages/Mainboard";
 import Admin from "./pages/Admin/Admin";
 import DataForm from "./pages/DataForm";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/DataForm",
     element: <DataForm />, // Mainboard
+  },
+  {
+    path: "/Profile",
+    element: <Profile />, // Mainboard
   },
 ]);
 
