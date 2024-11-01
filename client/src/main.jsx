@@ -36,6 +36,10 @@ const router = createBrowserRouter([
     element: <Mainboard />, // Mainboard
   },
   {
+    path: "/Mainboard/:plot_id",
+    element: <Mainboard />, // Mainboard
+  },
+  {
     path: "/Admin",
     element: <Admin />, // Mainboard
   },
