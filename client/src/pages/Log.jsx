@@ -77,9 +77,9 @@ const Log = () => {
           </div>
           <span className="text-xs font-instrument md:text-sm ml-4">Ale Perdana</span>
           <img
-            src={UserProfile} // Gunakan gambar profil pengguna
+            src={UserProfile} 
             alt="User Profile"
-            className="w-4 h-4 md:w-8 md:h-8 ml-4 mr-4 rounded-full" // Tambahkan margin dan bentuk bulat
+            className="w-4 h-4 md:w-8 md:h-8 ml-4 mr-4 rounded-full"
           />
         </div>
       </header>
