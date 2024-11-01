@@ -12,6 +12,7 @@ import Mainboard from "@/pages/Mainboard";
 import Admin from "./pages/Admin/Admin";
 import DataForm from "./pages/DataForm";
 import Profile from "./pages/Profile";
+import Feature from "./pages/Feature";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "/Profile",
     element: <Profile />, // Mainboard
+  },
+  {
+    path: "/Feature",
+    element: <Feature />, //Feature
   },
 ]);
 

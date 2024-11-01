@@ -1,7 +1,8 @@
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
 import gambar1 from '../../assets/Articles/gambar1.svg'; 
 import gambar2 from '../../assets/Articles/gambar2.svg';
-import gambar3 from '../../assets/Articles/gambar3.svg'; // saya ganti agar sesuai
+import gambar3 from '../../assets/Articles/gambar3.svg';
 
 const Articles = () => {
   const articles = [
@@ -32,29 +33,38 @@ const Articles = () => {
       </div>
 
       <div className="flex flex-wrap justify-center gap-6">
-        {articles.map((article, index) => (
-          <div
-            key={index}
-            className="w-[420px] h-[580px] bg-white rounded-[40px] shadow-lg p-6 text-left"
-          >
-            {/* Gambar ditampilkan di sini */}
-            <div className="w-full h-56 rounded-[40px] mb-6 overflow-hidden">
-              <img
-                src={article.imageSrc}
-                alt={article.title}
-                className="w-full h-full object-cover"
-              />
+        {articles.map((article, index) => {
+
+          const { ref, inView } = useInView({
+            threshold: 0.1, 
+          });
+
+          return (
+            <div
+              key={index}
+              ref={ref}
+              className={`w-[420px] h-[580px] bg-white rounded-[40px] shadow-lg p-6 text-left transition-all duration-700 ease-out transform 
+                          ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            >
+              {/* Gambar ditampilkan di sini */}
+              <div className="w-full h-56 rounded-[40px] mb-6 overflow-hidden">
+                <img
+                  src={article.imageSrc}
+                  alt={article.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <p className="text-gray-500 mb-2">{article.date}</p>
+              <h3 className="text-xl font-semibold mb-3">{article.title}</h3>
+              <p className="text-gray-600 mb-4">{article.description}</p>
+
+              <a href="#" className="text-blue-500 hover:underline">
+                Read more..
+              </a>
             </div>
-
-            <p className="text-gray-500 mb-2">{article.date}</p>
-            <h3 className="text-xl font-semibold mb-3">{article.title}</h3>
-            <p className="text-gray-600 mb-4">{article.description}</p>
-
-            <a href="#" className="text-blue-500 hover:underline">
-              Read more..
-            </a>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

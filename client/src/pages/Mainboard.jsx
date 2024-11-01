@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { motion } from 'framer-motion'; // Import Framer Motion
 import Footer from "@/components/Footer/Footer";
 import Ph from "../assets/ph.png";
 import Nitrogen from "../assets/nitrogen.png";
@@ -24,7 +25,13 @@ const Mainboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }} // Animasi awal saat halaman muncul
+      animate={{ opacity: 1, y: 0 }}  // Posisi akhir animasi
+      exit={{ opacity: 0, y: -50 }}   // Animasi keluar saat halaman berpindah
+      transition={{ duration: 0.8, ease: 'easeInOut' }} // Transisi yang lebih halus
+      className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white"
+    >
       <NavbarLoggedin />
 
       {/* Form Pilihan */}
@@ -71,19 +78,17 @@ const Mainboard = () => {
         </div>
       </div>
 
-
       {/* Kotak Informasi Atas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-[#F5FFDE] p-4 lg:p-8 mt-14 mx-auto max-w-full justify-items-center">
         {upperBoxData.map((item, index) => (
           <div
             key={index}
-            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full"
+            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full transition-transform duration-300 hover:scale-105"
             style={{
               aspectRatio: "1/1",
               maxWidth: "220px",
             }}
           >
-            {/* Image */}
             <img
               src={item.icon}
               alt={item.label}
@@ -99,7 +104,7 @@ const Mainboard = () => {
                 {item.value}
               </h3>
             )}
-            <p className="text-lg text-black font-semibold mt-2">{item.label}</p>
+            <p className="text-lg text-black font-semibold font-Inter mt-2">{item.label}</p>
           </div>
         ))}
       </div>
@@ -109,13 +114,12 @@ const Mainboard = () => {
         {lowerBoxData.map((item, index) => (
           <div
             key={index}
-            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full"
+            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full transition-transform duration-300 hover:scale-105"
             style={{
               aspectRatio: "1/1",
               maxWidth: "220px",
             }}
           >
-            {/* Image */}
             <img
               src={item.icon}
               alt={item.label}
@@ -129,10 +133,9 @@ const Mainboard = () => {
         ))}
       </div>
 
-
       {/* Footer */}
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 
