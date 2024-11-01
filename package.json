@@ -5,5 +5,17 @@
     "react-router-dom": "^6.27.0",
     "react-simple-typewriter": "^5.0.1",
     "react-type-animation": "^3.2.0"
-  }
+
+  "name": "irrigation-sytem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.4.10"
 }
