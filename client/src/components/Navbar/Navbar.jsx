@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <>
       {/* Navbar */}
-      <header className="bg-[#4f6557] backdrop-filter backdrop-blur-md p-2 flex justify-between items-center h-24 sticky top-0 z-50">
+      <header className="bg-[#4f6557] backdrop-filter backdrop-blur-md p-2 flex justify-between items-center h-24 sticky top-0 z-50 ">
         {/* Logo dan Nama Aplikasi */}
         <div className="flex items-center">
           <img
@@ -79,36 +79,35 @@ const Navbar = () => {
         {/* Informasi Cuaca dan Profil Pengguna */}
         <div className="hidden md:flex items-center font-poppins">
           <div className="flex items-center mr-3 lg:mr-5">
-            <div className="flex flex-col text-right mr-3">
+            <div className="flex flex-col text-right mr-2">
               <h2 className="text-sm md:text-2xl font-poppins -mx-0">30°</h2>
               <span className="text-xs md:text-xs -mt-1 -mx-0">Cloudy</span>
             </div>
             <img
               src={Cloudy}
               alt="Cloudy Icon"
-              className="w-6 h-6 md:w-10 md:h-10 ml-1"
+              className="w-6 h-6 md:w-10 md:h-10 mr-5"
             />
             <div className="flex items-center gap-4">
-            {/* <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
+              {/* <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
               <CiSearch />
             </button>
             <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
               <PiShoppingCartThin />
             </button> */}
-            <a
-              className="hover:bg-white bg-bgLogin text-white font-semibold hover:text-green-700 rounded-md border-2  mx-2 px-6 py-2 duration-200 hidden md:block"
-              href="/login"
-            >
-              Log In
-            </a>
-            <a
-              className="hover:bg-customColor text-white font-semibold hover:text-white rounded-md border-2 border-white px-6 py-2 duration-200 hidden md:block"
-              href="/register"
-            >
-              Sign Up
-            </a>
-
-          </div>
+              <a
+                className="hover:bg-white bg-bgLogin text-white font-semibold hover:text-green-700 rounded-md border-2  mx-2 px-6 py-2 duration-200 hidden md:block"
+                href="/login"
+              >
+                Log In
+              </a>
+              <a
+                className="hover:bg-customColor text-white font-semibold hover:text-white rounded-md border-2 border-white px-6 py-2 duration-200 hidden md:block"
+                href="/register"
+              >
+                Sign Up
+              </a>
+            </div>
           </div>
         </div>
       </header>

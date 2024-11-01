@@ -15,11 +15,11 @@ const DataForm = () => {
           {/* Kolom Kiri */}
           <div className="flex flex-col gap-3">
             <label htmlFor="plotName" className="font-poppins text-black">
-              Nama Petak
+              Plot ID
             </label>
             <input
               type="text"
-              placeholder="Nama Petak Lahan"
+              placeholder="ID Plot"
               className="p-2 rounded-xl bg-white text-black border border-gray-300"
             />
 
