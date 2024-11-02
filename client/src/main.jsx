@@ -12,6 +12,7 @@ import Admin from "./pages/Admin/Admin";
 import DataForm from "./pages/DataForm";
 import Profile from "./pages/Profile";
 import Feature from "./pages/Feature";
+import QualityData from "./pages/QualityData";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/Feature",
     element: <Feature />, //Feature
+  },
+  {
+    path: "/QualityData",
+    element: <QualityData />, //QualityData
   },
 ]);
 
