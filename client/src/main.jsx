@@ -13,6 +13,8 @@ import DataForm from "./pages/DataForm";
 import Profile from "./pages/Profile";
 import Feature from "./pages/Feature";
 import Articlespage from "./pages/Articlespage";
+import QualityData from "./pages/QualityData";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -58,7 +60,11 @@ const router = createBrowserRouter([
   {
     path: "/Articlespage",
     element: <Articlespage />
-  }
+  },
+  {
+    path: "/QualityData",
+    element: <QualityData />, //QualityData
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
