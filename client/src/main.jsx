@@ -12,7 +12,7 @@ import Admin from "./pages/Admin/Admin";
 import DataForm from "./pages/DataForm";
 import Profile from "./pages/Profile";
 import Feature from "./pages/Feature";
-
+import Articlespage from "./pages/Articlespage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +55,10 @@ const router = createBrowserRouter([
     path: "/Feature",
     element: <Feature />, //Feature
   },
+  {
+    path: "/Articlespage",
+    element: <Articlespage />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
