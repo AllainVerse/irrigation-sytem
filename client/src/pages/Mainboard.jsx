@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { motion } from 'framer-motion'; // Import Framer Motion
 import Footer from "@/components/Footer/Footer";
 import Ph from "../assets/ph.png";
@@ -11,6 +13,34 @@ import Humidity from "../assets/humidity.png";
 import NavbarLoggedin from "@/components/Navbar/NavbarLoggedin";
 
 const Mainboard = () => {
+  const { plot_id } = useParams(); // Ambil plot_id dari URL
+  const [plots, setPlots] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchPlots();
+  }, []);
+
+  const fetchPlots = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:3000/plots", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("Fetched Plots:", response.data);
+      setPlots(response.data);
+    } catch (error) {
+      console.error("Error fetching plots:", error);
+    }
+  };
+
+  const handlePlotChange = (event) => {
+    const selectedPlotId = event.target.value;
+    if (selectedPlotId) {
+      navigate(`/Mainboard/${selectedPlotId}`); // Arahkan ke URL dengan plot_id
+    }
+  };
+
   const upperBoxData = [
     { label: "pH Condition", value: "37", icon: Ph },
     { label: "Humidity", value: "37", icon: Humidity },
@@ -37,10 +67,17 @@ const Mainboard = () => {
       {/* Form Pilihan */}
       <div className="p-8 flex flex-col items-center justify-center mt-6 rounded-lg">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 w-full max-w-screen-lg">
-          <select className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center">
-            <option>Pilih Petak</option>
-            <option>Petak 1</option>
-            <option>Petak 2</option>
+          <select
+            className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center"
+            onChange={handlePlotChange}
+            value={plot_id || ""} // Set nilai saat page load sesuai dengan URL
+          >
+            <option value="">Pilih Petak</option>
+            {plots.map((plot) => (
+              <option key={plot.plot_id} value={plot.plot_id}>
+                {plot.plot_name}
+              </option>
+            ))}
           </select>
 
           <select className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center">

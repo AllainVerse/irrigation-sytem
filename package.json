@@ -5,8 +5,8 @@
     "react-router-dom": "^6.27.0",
     "react-simple-typewriter": "^5.0.1",
     "react-type-animation": "^3.2.0"
-  },
-  "name": "irrigation-system",
+
+  "name": "irrigation-sytem",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
