@@ -87,7 +87,7 @@ const Log = () => {
       </header>
 
       {/* Irrigation Log Section */}
-      <section className="flex flex-col items-center py-8 md:py-10 mb-20 mt-20"> {/* Menambahkan margin-bottom */}
+      <section className="flex flex-col items-center mb-28 mt-28"> {/* Menambahkan margin-bottom */}
         <div className="w-full max-w-3xl md:max-w-5xl bg-[#DFEDC0] p-4 md:p-6 rounded-lg shadow-lg">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
             <h1 className="text-lg md:text-xl font-poppins font-bold text-black">
