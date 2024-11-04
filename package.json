@@ -6,7 +6,7 @@
     "react-simple-typewriter": "^5.0.1",
     "react-type-animation": "^3.2.0"
   },
-  "name": "irrigation-sytem",
+  "name": "irrigation-system",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
