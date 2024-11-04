@@ -9,6 +9,7 @@ import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import LogAdmin from "./LogAdmin";
 import PlotConfig from "./PlotConfig";
 import SensorConfig from "./SensorConfig";
+import QualityData from "./QualityData";
 
 const Admin = () => {
   const [activePage, setActivePage] = useState("Admin"); // State halaman aktif
@@ -18,11 +19,11 @@ const Admin = () => {
     { name: "Irrigation Log", icon: MdOutlineDashboard },
     { name: "Plot Configuration", icon: AiOutlineUser },
     { name: "Sensor Configuration", icon: FiMessageSquare },
-    { name: "analytics", icon: TbReportAnalytics, margin: true },
-    { name: "File Manager", icon: FiFolder },
-    { name: "Cart", icon: FiShoppingCart },
-    { name: "Saved", icon: AiOutlineHeart, margin: true },
-    { name: "Setting", icon: RiSettings4Line },
+    { name: "Plot Quality", icon: TbReportAnalytics },
+    // { name: "File Manager", icon: FiFolder },
+    // { name: "Cart", icon: FiShoppingCart },
+    // { name: "Saved", icon: AiOutlineHeart, margin: true },
+    // { name: "Setting", icon: RiSettings4Line },
   ];
 
   return (
@@ -87,6 +88,13 @@ const Admin = () => {
         <div>
           {activePage === "Sensor Configuration" ? (
             <SensorConfig />
+          ) : (
+            null
+          )}
+        </div>
+        <div>
+          {activePage === "Plot Quality" ? (
+            <QualityData />
           ) : (
             null
           )}
