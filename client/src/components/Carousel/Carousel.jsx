@@ -13,7 +13,7 @@ const Carousel = () => {
         <p className="text-lg">
           We help you monitor your farm with our IoT Monitoring System
         </p>
-        <button className="bg-[#50C550] text-white px-6 py-3 rounded-full font-semibold">
+        <button className="bg-[#50C550] text-white px-6 py-3 rounded-full font-semibold font-poppins">
           Learn More
         </button>
       </div>

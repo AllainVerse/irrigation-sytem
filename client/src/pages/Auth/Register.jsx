@@ -10,8 +10,10 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState(null);
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(null);
     try {
       const response = await axios.post("http://localhost:3000/register", {
         name,
@@ -19,8 +21,16 @@ const Register = () => {
         password,
       });
       console.log(response.data);
+
+      if (response.data) {
+        window.location.href = "/login";
+      } else {
+        throw new Error("Register failed: account already exists");
+      }
+
     } catch (error) {
       console.error(error);
+      setError("Account already exists");
     }
   };
 
@@ -188,6 +198,9 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
             <div className="flex items-center justify-between">
               <Button
                 className="w-full bg-[#BFC653] hover:bg-green-700 text-black font-poppins font-semibold py-2 px-4 rounded-[30px] focus:outline-none focus:shadow-outline"

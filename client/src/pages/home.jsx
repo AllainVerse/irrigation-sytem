@@ -7,7 +7,7 @@ import Footer from "@/components/Footer/Footer";
 
 const HomePage = () => {
   return (
-    <div className="overflow-x-hidden">
+    <div>
       <Navbar />
       <Carousel />
       <Cards />

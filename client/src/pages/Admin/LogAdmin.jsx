@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import Logo from "../../assets/logo-removebg-preview.png";
+import Cloudy from "../../assets/cloudy.png";
+import UserProfile from "../../assets/logo-user.png";
 import SearchIcon from "../../assets/search.png";
 
 const LogAdmin = () => {

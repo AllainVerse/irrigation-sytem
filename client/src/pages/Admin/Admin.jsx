@@ -7,19 +7,23 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import LogAdmin from "./LogAdmin";
+import PlotConfig from "./PlotConfig";
+import SensorConfig from "./SensorConfig";
+import QualityData from "./QualityData";
+
 const Admin = () => {
   const [activePage, setActivePage] = useState("Admin"); // State halaman aktif
   const [open, setOpen] = useState(true);
 
   const menus = [
-    { name: "dashboard", icon: MdOutlineDashboard },
-    { name: "user", icon: AiOutlineUser },
-    { name: "messages", icon: FiMessageSquare },
-    { name: "analytics", icon: TbReportAnalytics, margin: true },
-    { name: "File Manager", icon: FiFolder },
-    { name: "Cart", icon: FiShoppingCart },
-    { name: "Saved", icon: AiOutlineHeart, margin: true },
-    { name: "Setting", icon: RiSettings4Line },
+    { name: "Irrigation Log", icon: MdOutlineDashboard },
+    { name: "Plot Configuration", icon: AiOutlineUser },
+    { name: "Sensor Configuration", icon: FiMessageSquare },
+    { name: "Plot Quality", icon: TbReportAnalytics },
+    // { name: "File Manager", icon: FiFolder },
+    // { name: "Cart", icon: FiShoppingCart },
+    // { name: "Saved", icon: AiOutlineHeart, margin: true },
+    // { name: "Setting", icon: RiSettings4Line },
   ];
 
   return (
@@ -66,14 +70,35 @@ const Admin = () => {
         <Navbar sidebarOpen={open} />
 
         {/* Content Area */}
-        <div className="p-4  mt-4">
-          {/* Kotak Merah */}
-          {activePage === "dashboard" ? (
+        <div className="p-4">
+        <div>
+          {activePage === "Irrigation Log" ? (
             <LogAdmin />
           ) : (
-            <h1>Selamat datang di halaman {activePage}</h1>
+            null
           )}
-          {/* Menampilkan Log jika halaman aktif adalah dashboard */}
+        </div>
+        <div>
+          {activePage === "Plot Configuration" ? (
+            <PlotConfig />
+          ) : (
+            null
+          )}
+        </div>
+        <div>
+          {activePage === "Sensor Configuration" ? (
+            <SensorConfig />
+          ) : (
+            null
+          )}
+        </div>
+        <div>
+          {activePage === "Plot Quality" ? (
+            <QualityData />
+          ) : (
+            null
+          )}
+        </div>
         </div>
       </div>
     </div>
