@@ -8,6 +8,9 @@ import Calender2 from '../assets/Calender2.png';
 import Location from '../assets/Location.png';
 import iconverified from '../assets/iconverified.png';
 import Job from '../assets/Job.png';
+import wallppr6 from '../assets/wallppr6.png';
+import wallppr2 from '../assets/wallppr2.png';
+import wallppr3 from '../assets/wallppr3.png';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -16,6 +19,8 @@ const Profile = () => {
     email: '',
     password: ''
   });
+  const [coverImage, setCoverImage] = useState(wallppr6); // State untuk cover yang dipilih
+  const [isModalOpen, setIsModalOpen] = useState(false); // State untuk modal
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +35,11 @@ const Profile = () => {
     console.log('Profile updated:', profile);
   };
 
+  const handleCoverChange = (newCover) => {
+    setCoverImage(newCover);
+    setIsModalOpen(false); // Tutup modal setelah memilih cover
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
       <Navbar className="fixed top-0 left-0 w-full z-50 bg-white shadow-md" />
@@ -37,11 +47,14 @@ const Profile = () => {
 
       <div className="relative w-full">
         <img
-          src={wallppr1}
+          src={coverImage}
           alt="Cover"
           className="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/2 object-cover w-full h-70 sm:h-94"
         />
-        <button className="absolute bottom-7 right-3 text-gray-700 border border-gray-400 px-3 py-1 rounded-full font-poppins text-sm hover:bg-gray-100 transition-colors flex items-center gap-1">
+        <button
+          className="absolute bottom-7 right-3 text-gray-700 border border-gray-400 px-3 py-1 rounded-full font-poppins text-sm hover:bg-gray-100 transition-colors flex items-center gap-1"
+          onClick={() => setIsModalOpen(true)} // Buka modal ketika diklik
+        >
           <img src={iconcover} alt="icon" className="w-4 h-4" />
           Change Cover
         </button>
@@ -82,6 +95,32 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* untuk memilih wallpaper */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full">
+            <h3 className="text-lg font-bold mb-4">Select a Cover Image</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {[wallppr1, wallppr2, wallppr3, wallppr6].map((wallpaper, index) => (
+                <img
+                  key={index}
+                  src={wallpaper}
+                  alt={`wallpaper${index + 1}`}
+                  className="cursor-pointer rounded-lg w-full h-32 object-cover"
+                  onClick={() => handleCoverChange(wallpaper)}
+                />
+              ))}
+            </div>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="mt-4 w-full px-4 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="relative max-w-5xl mx-auto mb-12">
         <div className="absolute top-[-56px] right-0">
@@ -139,7 +178,7 @@ const Profile = () => {
               />
             </div>
 
-            {/* Button to Save Changes */}
+            {/* Button untuk Save Changes */}
             <button
               type="submit"
               className="w-full px-4 py-2 mt-6 bg-[#50C550] text-white rounded-full hover:bg-[#2F762F] transition-colors"
