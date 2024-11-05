@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion } from 'framer-motion'; // Import Framer Motion
+import { motion } from "framer-motion"; // Import Framer Motion
 import Footer from "@/components/Footer/Footer";
 import Ph from "../assets/ph.png";
 import Nitrogen from "../assets/nitrogen.png";
@@ -57,9 +57,9 @@ const Mainboard = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }} // Animasi awal saat halaman muncul
-      animate={{ opacity: 1, y: 0 }}  // Posisi akhir animasi
-      exit={{ opacity: 0, y: -50 }}   // Animasi keluar saat halaman berpindah
-      transition={{ duration: 0.8, ease: 'easeInOut' }} // Transisi yang lebih halus
+      animate={{ opacity: 1, y: 0 }} // Posisi akhir animasi
+      exit={{ opacity: 0, y: -50 }} // Animasi keluar saat halaman berpindah
+      transition={{ duration: 0.8, ease: "easeInOut" }} // Transisi yang lebih halus
       className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white"
     >
       <NavbarLoggedin />
@@ -101,7 +101,7 @@ const Mainboard = () => {
           <div className="flex justify-start col-start-1">
             <button
               className="bg-[#F5F5DC] text-black font-poppins font-semibold p-2 rounded-lg w-2/3 transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
-              onClick={() => alert('Data telah diinput')}
+              onClick={() => alert("Data telah diinput")}
             >
               Input Data
             </button>
@@ -141,7 +141,9 @@ const Mainboard = () => {
                 {item.value}
               </h3>
             )}
-            <p className="text-lg text-black font-semibold font-Inter mt-2">{item.label}</p>
+            <p className="text-lg text-black font-semibold font-Inter mt-2">
+              {item.label}
+            </p>
           </div>
         ))}
       </div>
@@ -165,7 +167,9 @@ const Mainboard = () => {
             <h3 className="text-6xl font-bold text-black font-poppins mt-16">
               {item.value}
             </h3>
-            <p className="text-lg text-black font-semibold mt-2">{item.label}</p>
+            <p className="text-lg text-black font-semibold mt-2">
+              {item.label}
+            </p>
           </div>
         ))}
       </div>
