@@ -12,8 +12,9 @@ const Log = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
       {/* Navbar */}
-      <header >
       <NavbarLoggedin />
+      <header >
+      
         {/* Logo dan Nama Aplikasi */}
         {/* <div className="flex items-center">
           <img src={Logo} alt="Irrigo Logo" className="w-16 h-16 md:w-20 md:h-20 mr-2 -mt-2" />

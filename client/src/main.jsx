@@ -55,11 +55,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/Feature",
-    element: <Feature />, //Feature
+    element: <Feature />, //Feature Pages
   },
   {
     path: "/Articlespage",
-    element: <Articlespage />
+    element: <Articlespage /> //Articles Pages
   },
   {
     path: "/QualityData",
