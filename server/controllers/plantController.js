@@ -39,11 +39,11 @@ exports.getPlantNeeds = async (req, res) => {
 };
 
 exports.updatePlantNeed = async (req, res) => {
-  const { crop_id } = req.params;
+  const { plot_id } = req.params;
   const { crop_name, optimal_moisture, water_requirement } = req.body;
 
   try {
-    const plantNeed = await PlantNeeds.findByPk(crop_id);
+    const plantNeed = await PlantNeeds.findOne({ where: { plot_id: plot_id } });
     if (!plantNeed) {
       return res.status(404).json({ message: "Plant need not found" });
     }
@@ -61,10 +61,10 @@ exports.updatePlantNeed = async (req, res) => {
 };
 
 exports.deletePlantNeed = async (req, res) => {
-  const { crop_id } = req.params;
+  const { plot_id } = req.params;
 
   try {
-    const plantNeed = await PlantNeeds.findByPk(crop_id);
+    const plantNeed = await PlantNeeds.findOne({ where: { plot_id: plot_id } });
     if (!plantNeed) {
       return res.status(404).json({ message: "Plant need not found" });
     }

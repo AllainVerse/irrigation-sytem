@@ -24,13 +24,13 @@ router.get(
   getPlantNeeds
 );
 router.put(
-  "/:plot_id/plant-needs/:crop_id",
+  "/:plot_id/plant-needs",
   authenticateToken,
   checkRole(["farmer"]),
   updatePlantNeed
 );
 router.delete(
-  "/:plot_id/plant-needs/:crop_id",
+  "/:plot_id/plant-needs",
   authenticateToken,
   checkRole(["farmer"]),
   deletePlantNeed

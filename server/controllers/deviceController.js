@@ -10,8 +10,7 @@ exports.createDevice = async (req, res) => {
     }
 
     const device = await Device.create({
-      device_name,
-      user_id: req.user.id,
+      device_name: device_name,
       plot_id: plot_id,
     });
 

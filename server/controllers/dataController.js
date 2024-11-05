@@ -2,7 +2,7 @@ const { SensorData } = require("../models");
 const axios = require("axios");
 
 exports.predictPlant = async (req, res) => {
-  const { plot_id } = req.params; // Ambil plot_id dari parameter URL
+  const { plot_id } = req.params;
   const {
     nitrogen,
     phosphorus,
@@ -14,20 +14,39 @@ exports.predictPlant = async (req, res) => {
   } = req.body;
 
   try {
-    const fastApiResponse = await await axios.post(
-      "http://127.0.0.1:8000/predict",
-      {
-        N: nitrogen,
-        P: phosphorus,
-        K: potassium,
-        temperature: temperature,
-        humidity: humidity,
-        ph: ph,
-        rainfall: rainfall,
-      }
-    );
+    const fastApiResponse = await axios.post("http://127.0.0.1:8000/predict", {
+      N: nitrogen,
+      P: phosphorus,
+      K: potassium,
+      temperature: temperature,
+      humidity: humidity,
+      ph: ph,
+      rainfall: rainfall,
+    });
 
     const predictedLabel = fastApiResponse.data.prediction;
+
+    const updateSensorData = await SensorData.findOne({
+      where: { plot_id: plot_id },
+    });
+
+    if (updateSensorData) {
+      updateSensorData.nitrogen = nitrogen;
+      updateSensorData.phosphorus = phosphorus;
+      updateSensorData.potassium = potassium;
+      updateSensorData.temperature = temperature;
+      updateSensorData.humidity = humidity;
+      updateSensorData.ph = ph;
+      updateSensorData.rainfall = rainfall;
+      updateSensorData.label = predictedLabel;
+      await updateSensorData.save();
+
+      res.json({
+        message: "Plot data updated successfully",
+        labelPredicted: updateSensorData.label,
+      });
+      return;
+    }
 
     const newSensorData = await SensorData.create({
       plot_id: plot_id,
@@ -38,7 +57,7 @@ exports.predictPlant = async (req, res) => {
       humidity: humidity,
       ph: ph,
       rainfall: rainfall,
-      label: predictedLabel, // Simpan hasil prediksi dari FastAPI
+      label: predictedLabel,
     });
 
     res.status(200).json({
@@ -46,7 +65,7 @@ exports.predictPlant = async (req, res) => {
       labelPredicted: newSensorData.label,
     });
   } catch (error) {
-    console.error("Error: ", error);
+    console.error("Error: ", error.response || error.message);
     res.status(500).json({ error: "Terjadi kesalahan pada server" });
   }
 };

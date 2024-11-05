@@ -122,8 +122,8 @@ exports.getSchedules = async (req, res) => {
       schedules = await Schedule.findAll();
     } else if (req.user.role === "farmer") {
       // Farmer can only see their own schedules
-      schedules = await Schedule.findOne({
-        where: { schedule_id: schedule_id, plot_id: plot_id },
+      schedules = await Schedule.findAll({
+        where: { plot_id: plot_id },
       });
     } else {
       return res.status(403).json({ message: "Access denied" });
