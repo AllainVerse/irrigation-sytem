@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion"; // Import Framer Motion
 import Footer from "@/components/Footer/Footer";
 import Ph from "../assets/ph.png";
 import Nitrogen from "../assets/nitrogen.png";
@@ -13,13 +12,21 @@ import Humidity from "../assets/humidity.png";
 import NavbarLoggedin from "@/components/Navbar/NavbarLoggedin";
 
 const Mainboard = () => {
-  const { plot_id } = useParams(); // Ambil plot_id dari URL
+  const { plot_id } = useParams();
   const [plots, setPlots] = useState([]);
+  const [selectedPlotId, setSelectedPlotId] = useState("");
+  const [plotData, setPlotData] = useState(null); // State to store specific plot data
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchPlots();
   }, []);
+
+  useEffect(() => {
+    if (plot_id) {
+      fetchPlotData(plot_id);
+    }
+  }, [plot_id]);
 
   const fetchPlots = async () => {
     try {
@@ -34,34 +41,73 @@ const Mainboard = () => {
     }
   };
 
+  const fetchPlotData = async (plot_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:3000/plots/${plot_id}/data`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setPlotData(response.data); // Set plot data yang diambil
+    } catch (error) {
+      console.error("Error fetching plot data:", error);
+    }
+  };
+
   const handlePlotChange = (event) => {
     const selectedPlotId = event.target.value;
+    setSelectedPlotId(selectedPlotId);
+    fetchPlotData(selectedPlotId); // Fetch data ketika plot baru dipilih
+
+    // Update URL untuk plot_id baru
+    navigate(`/Mainboard/${selectedPlotId}`);
+  };
+
+  const handleInputDataClick = () => {
     if (selectedPlotId) {
-      navigate(`/Mainboard/${selectedPlotId}`); // Arahkan ke URL dengan plot_id
+      navigate(`/plots/${selectedPlotId}/predict`);
+    } else {
+      alert("Please select a plot first.");
     }
   };
 
   const upperBoxData = [
-    { label: "pH Condition", value: "37", icon: Ph },
-    { label: "Humidity", value: "37", icon: Humidity },
-    { label: "Temperature", value: "30", icon: Temperature },
-    { label: "Phosphor Level", value: "37", icon: Phosphor },
+    { label: "pH Condition", value: plotData?.ph || "N/A", icon: Ph },
+    { label: "Humidity", value: plotData?.humidity || "N/A", icon: Humidity },
+    {
+      label: "Temperature",
+      value: plotData?.temperature || "N/A",
+      icon: Temperature,
+    },
+    {
+      label: "Phosphor Level",
+      value: plotData?.phosphorus || "N/A",
+      icon: Phosphor,
+    },
   ];
 
   const lowerBoxData = [
-    { label: "Potassium Level", value: "37", icon: Potasium },
-    { label: "Nitrogen Level", value: "37", icon: Nitrogen },
-    { label: "Rainfall Rate", value: "37", icon: Rainfall },
+    {
+      label: "Potassium Level",
+      value: plotData?.potassium || "N/A",
+      icon: Potasium,
+    },
+    {
+      label: "Nitrogen Level",
+      value: plotData?.nitrogen || "N/A",
+      icon: Nitrogen,
+    },
+    {
+      label: "Rainfall Rate",
+      value: plotData?.rainfall || "N/A",
+      icon: Rainfall,
+    },
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }} // Animasi awal saat halaman muncul
-      animate={{ opacity: 1, y: 0 }} // Posisi akhir animasi
-      exit={{ opacity: 0, y: -50 }} // Animasi keluar saat halaman berpindah
-      transition={{ duration: 0.8, ease: "easeInOut" }} // Transisi yang lebih halus
-      className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white"
-    >
+    <div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
       <NavbarLoggedin />
 
       {/* Form Pilihan */}
@@ -70,7 +116,7 @@ const Mainboard = () => {
           <select
             className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center"
             onChange={handlePlotChange}
-            value={plot_id || ""} // Set nilai saat page load sesuai dengan URL
+            value={selectedPlotId}
           >
             <option value="">Pilih Petak</option>
             {plots.map((plot) => (
@@ -100,8 +146,8 @@ const Mainboard = () => {
 
           <div className="flex justify-start col-start-1">
             <button
+              onClick={handleInputDataClick}
               className="bg-[#F5F5DC] text-black font-poppins font-semibold p-2 rounded-lg w-2/3 transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
-              onClick={() => alert("Data telah diinput")}
             >
               Input Data
             </button>
@@ -120,28 +166,21 @@ const Mainboard = () => {
         {upperBoxData.map((item, index) => (
           <div
             key={index}
-            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full transition-transform duration-300 hover:scale-105"
-            style={{
-              aspectRatio: "1/1",
-              maxWidth: "220px",
-            }}
+            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full"
+            style={{ aspectRatio: "1/1", maxWidth: "220px" }}
           >
             <img
               src={item.icon}
               alt={item.label}
               className="absolute top-0 left-0 w-12 h-12 m-2"
             />
-            {item.label === "Temperature" ? (
-              <h3 className="text-6xl font-bold text-black mt-16">
-                {item.value}
+            <h3 className="text-6xl font-bold text-black mt-16">
+              {item.value}
+              {item.label === "Temperature" && (
                 <span className="text-3xl relative -top-7">°C</span>
-              </h3>
-            ) : (
-              <h3 className="text-6xl font-bold text-black mt-16">
-                {item.value}
-              </h3>
-            )}
-            <p className="text-lg text-black font-semibold font-Inter mt-2">
+              )}
+            </h3>
+            <p className="text-lg text-black font-semibold mt-2">
               {item.label}
             </p>
           </div>
@@ -153,11 +192,8 @@ const Mainboard = () => {
         {lowerBoxData.map((item, index) => (
           <div
             key={index}
-            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full transition-transform duration-300 hover:scale-105"
-            style={{
-              aspectRatio: "1/1",
-              maxWidth: "220px",
-            }}
+            className="relative flex flex-col items-center justify-center p-6 bg-[#DFEDC0] rounded-lg shadow-lg text-center outline outline-4 outline-black w-full"
+            style={{ aspectRatio: "1/1", maxWidth: "220px" }}
           >
             <img
               src={item.icon}
@@ -176,7 +212,7 @@ const Mainboard = () => {
 
       {/* Footer */}
       <Footer />
-    </motion.div>
+    </div>
   );
 };
 

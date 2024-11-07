@@ -42,6 +42,10 @@ const router = createBrowserRouter([
     element: <Mainboard />, // Mainboard
   },
   {
+    path: "/plots/:plot_id/predict",
+    element: <DataForm />, // Mainboard
+  },
+  {
     path: "/Admin",
     element: <Admin />, // Mainboard
   },
@@ -60,8 +64,6 @@ const router = createBrowserRouter([
   {
     path: "/Articlespage",
     element: <Articlespage /> //Articles Pages
-    
-
   },
   {
     path: "/QualityData",
