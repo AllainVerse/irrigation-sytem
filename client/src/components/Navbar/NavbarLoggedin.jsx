@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo-new.png";
 import Cloudy from "../../assets/cloudy.png";
 import UserProfile from "../../assets/logo-user.png";
@@ -6,13 +6,53 @@ import { useLogin } from "@/pages/Auth/useLogin";
 
 const NavbarLoggedin = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [weatherData, setWeatherData] = useState({ temp: null, description: "" });
+  const [locationError, setLocationError] = useState(null);
   const username = useLogin();
+
+  useEffect(() => {
+    const fetchWeather = async (latitude, longitude) => {
+      const apiKey = "672910821ead9c520f88606a4bdaef7d";
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=id`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Gagal mengambil data cuaca");
+        }
+        const data = await response.json();
+        setWeatherData({
+          temp: data.main.temp,
+          description: data.weather[0].description,
+        });
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    };
+
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            fetchWeather(latitude, longitude);
+          },
+          (error) => {
+            setLocationError("Tidak dapat mengambil lokasi. Mohon periksa izin lokasi di browser.");
+          }
+        );
+      } else {
+        setLocationError("Geolocation tidak didukung di browser ini.");
+      }
+    };
+
+    getLocation();
+  }, []);
 
   return (
     <>
-      {/* Navbar */}
       <header className="bg-[rgba(171,181,152,0.38)] backdrop-filter backdrop-blur-md p-2 flex justify-between items-center h-24 sticky top-0 z-50">
-        {/* Logo dan Nama Aplikasi */}
         <div className="flex items-center">
           <img
             src={logo}
@@ -26,7 +66,6 @@ const NavbarLoggedin = () => {
           </div>
         </div>
 
-        {/* Tampilkan username saat tampilan mobile dan tombol hamburger */}
         <div className="flex items-center mr-5 md:hidden">
           <a
             href="/user-profile"
@@ -49,18 +88,15 @@ const NavbarLoggedin = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={
-                  isNavOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
-                }
+                d={isNavOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
               ></path>
             </svg>
           </button>
         </div>
 
-        {/* Navigasi */}
         <nav
           className={`${
-            isNavOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+            isNavOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
           } transition-all duration-500 ease-in-out overflow-hidden md:flex items-center text-sm absolute md:static top-16 left-0 w-full md:w-auto bg-primary md:bg-transparent md:space-x-11 text-center md:opacity-100 md:max-h-full`}
         >
           <a
@@ -81,25 +117,32 @@ const NavbarLoggedin = () => {
           >
             Articles
           </a>
-          {/* <a
-            href="#"
-            className="block md:inline-block mx-auto py-2 md:py-0 text-[#DFEDC0] font-inter font-bold transition duration-700ms ease-in-out hover:text-[#ffffff] hover:underline hover:underline-offset-4"
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("name");
-              window.location.href = "/";
-            }}
-          >
-            Logout
-          </a> */}
+
+          {/* Weather data for mobile view */}
+          <div className="block md:hidden text-[#DFEDC0] my-4">
+            <h2 className="text-lg font-semibold font-Inter">
+              {weatherData.temp !== null ? `${Math.round(weatherData.temp)}°C` : locationError || "Loading..."}
+            </h2>
+            <span className="text-sm">
+              {weatherData.description || locationError || "Loading..."}
+            </span>
+            <img
+              src={Cloudy}
+              alt="Cloudy Icon"
+              className="w-6 h-6 md:w-10 md:h-10 mx-auto mt-1"
+            />
+          </div>
         </nav>
 
-        {/* Informasi Cuaca dan Profil Pengguna */}
         <div className="hidden md:flex items-center font-poppins">
           <div className="flex items-center mr-3 lg:mr-5">
             <div className="flex flex-col text-right mr-3">
-              <h2 className="text-sm md:text-2xl font-poppins -mx-0">30°</h2>
-              <span className="text-xs md:text-xs -mt-1 -mx-0">Cloudy</span>
+              <h2 className="text-lg md:text-3x1 font-poppins -mx-0">
+                {weatherData.temp !== null ? `${Math.round(weatherData.temp)}°C` : locationError || "Loading..."}
+              </h2>
+              <span className="text-lg md:text-sm -mt-1 -mx-0">
+                {weatherData.description || locationError || "Loading..."}
+              </span>
             </div>
             <img
               src={Cloudy}
@@ -109,13 +152,13 @@ const NavbarLoggedin = () => {
           </div>
 
           <a
-            href="/user-profile"
+            href="/profile"
             className="text-xs font-instrument md:text-sm ml-4 cursor-pointer hover:underline"
           >
             {username}
           </a>
 
-          <a href="/user-profile">
+          <a href="/profile">
             <img
               src={UserProfile}
               alt="User Profile"
@@ -124,56 +167,47 @@ const NavbarLoggedin = () => {
           </a>
 
           <div className="relative inline-block text-left">
-            <div>
-              <button
-                type="button"
-                className="text-xs font-instrument md:text-sm mt-2 mr-4 ml-1 cursor-pointer hover:underline"
-                id="logout-dropdown-button"
-                aria-expanded="false"
-                aria-haspopup="true"
-                onClick={() =>
-                  document
-                    .getElementById("logout-dropdown")
-                    .classList.toggle("hidden")
-                }
-              >
-                <span className="sr-only">Open logout dropdown</span>
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-
-            <div
-              className="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
-              id="logout-dropdown"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="logout-dropdown-button"
+            <button
+              type="button"
+              className="text-xs font-instrument md:text-sm mt-2 mr-4 ml-1 cursor-pointer hover:underline"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
-              <button
-                className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
-                role="menuitem"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("name");
-                  window.location.href = "/";
-                }}
+              <span className="sr-only">Open logout dropdown</span>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Logout
-              </button>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </button>
+
+            {isDropdownOpen && (
+              <div
+                className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
+                role="menu"
+                aria-orientation="vertical"
+              >
+                <button
+                  className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
+                  role="menuitem"
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("name");
+                    window.location.href = "/";
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </header>
