@@ -11,6 +11,7 @@ import Job from '../assets/Job.png';
 import wallppr6 from '../assets/wallppr6.png';
 import wallppr2 from '../assets/wallppr2.png';
 import wallppr3 from '../assets/wallppr3.png';
+import wallppr4 from '../assets/wallppr4.png';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -102,7 +103,7 @@ const Profile = () => {
           <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full">
             <h3 className="text-lg font-bold mb-4">Select a Cover Image</h3>
             <div className="grid grid-cols-3 gap-4">
-              {[wallppr1, wallppr2, wallppr3, wallppr6].map((wallpaper, index) => (
+              {[wallppr1, wallppr2, wallppr3, wallppr4, wallppr6].map((wallpaper, index) => (
                 <img
                   key={index}
                   src={wallpaper}
@@ -124,64 +125,64 @@ const Profile = () => {
 
       <div className="relative max-w-5xl mx-auto mb-12">
         <div className="absolute top-[-56px] right-0">
-          <div className="px-8 py-10 bg-[#6E9B69] rounded-3xl">
-            <span className="relative font-poppins font-semibold text-white top-[-22px]">Edit Profile</span>
+          <div className="px-8 py-10 bg-[#DFEDC0] rounded-3xl">
+            <span className="relative font-poppins font-bold text-black top-[-22px]">Edit Profile</span>
           </div>
         </div>
 
-        <div className="bg-[#6E9B69] p-8 rounded-[32px] shadow-lg max-w-5xl mx-auto mb-12 mt-16">
+        <div className="bg-[#DFEDC0] p-8 rounded-[32px] shadow-lg max-w-5xl mx-auto mb-12 mt-16">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="flex gap-4">
               <div className="flex flex-col w-1/2">
-                <label htmlFor="firstName" className="mb-2 font-poppins text-white">First Name</label>
+                <label htmlFor="firstName" className="mb-2 font-poppins text-black">First Name</label>
                 <input
                   type="text"
                   id="firstName"
                   name="firstName"
                   value={profile.firstName}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
+                  className="px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
                 />
               </div>
               <div className="flex flex-col w-1/2">
-                <label htmlFor="lastName" className="mb-2 font-poppins text-white">Last Name</label>
+                <label htmlFor="lastName" className="mb-2 font-poppins text-black">Last Name</label>
                 <input
                   type="text"
                   id="lastName"
                   name="lastName"
                   value={profile.lastName}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
+                  className="px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
                 />
               </div>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="email" className="mb-2 font-poppins text-white">Email Address</label>
+              <label htmlFor="email" className="mb-2 font-poppins text-black">Email Address</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={profile.email}
                 onChange={handleChange}
-                className="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
+                className="px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="password" className="mb-2 font-poppins text-white">Password</label>
+              <label htmlFor="password" className="mb-2 font-poppins text-black">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 value={profile.password}
                 onChange={handleChange}
-                className="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
+                className="px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 bg-white text-black"
               />
             </div>
 
             {/* Button untuk Save Changes */}
             <button
               type="submit"
-              className="w-full px-4 py-2 mt-6 bg-[#50C550] text-white rounded-full hover:bg-[#2F762F] transition-colors"
+              className="w-full px-4 py-2 mt-6 bg-blue-600 text-white rounded-xl"
             >
               Save Changes
             </button>
