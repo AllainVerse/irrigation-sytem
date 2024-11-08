@@ -68,7 +68,7 @@ const NavbarLoggedin = () => {
 
         <div className="flex items-center mr-5 md:hidden">
           <a
-            href="/user-profile"
+            href="/profile"
             className="text-xs font-instrument ml-4 cursor-pointer hover:underline"
           >
             {username}
@@ -95,9 +95,8 @@ const NavbarLoggedin = () => {
         </div>
 
         <nav
-          className={`${
-            isNavOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
-          } transition-all duration-500 ease-in-out overflow-hidden md:flex items-center text-sm absolute md:static top-16 left-0 w-full md:w-auto bg-primary md:bg-transparent md:space-x-11 text-center md:opacity-100 md:max-h-full`}
+          className={`${isNavOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
+            } transition-all duration-500 ease-in-out overflow-hidden md:flex items-center text-sm absolute md:static top-16 left-0 w-full md:w-auto bg-primary md:bg-transparent md:space-x-11 text-center md:opacity-100 md:max-h-full`}
         >
           <a
             href="/Mainboard"
@@ -118,7 +117,7 @@ const NavbarLoggedin = () => {
             Articles
           </a>
 
-          {/* Weather data for mobile view */}
+          {/* Weather data Responsive View */}
           <div className="block md:hidden text-[#DFEDC0] my-4">
             <h2 className="text-lg font-semibold font-Inter">
               {weatherData.temp !== null ? `${Math.round(weatherData.temp)}°C` : locationError || "Loading..."}
@@ -137,7 +136,7 @@ const NavbarLoggedin = () => {
         <div className="hidden md:flex items-center font-poppins">
           <div className="flex items-center mr-3 lg:mr-5">
             <div className="flex flex-col text-right mr-3">
-              <h2 className="text-lg md:text-3x1 font-poppins -mx-0">
+              <h2 className="text-lg md:text-2x1 font-poppins -mx-0">
                 {weatherData.temp !== null ? `${Math.round(weatherData.temp)}°C` : locationError || "Loading..."}
               </h2>
               <span className="text-lg md:text-sm -mt-1 -mx-0">
