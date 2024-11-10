@@ -113,7 +113,7 @@ cron.schedule("* * * * *", async () => {
 
 // Controller to get schedules
 exports.getSchedules = async (req, res) => {
-  const { plot_id, schedule_id } = req.params;
+  const { plot_id } = req.params;
 
   try {
     let schedules;

@@ -13,7 +13,6 @@ import DataForm from "./pages/DataForm";
 import Profile from "./pages/Profile";
 import Feature from "./pages/Feature";
 import Articlespage from "./pages/Articlespage";
-import QualityData from "./pages/Admin/QualityData";
 
 const router = createBrowserRouter([
   {
@@ -64,10 +63,6 @@ const router = createBrowserRouter([
   {
     path: "/Articlespage",
     element: <Articlespage /> //Articles Pages
-  },
-  {
-    path: "/QualityData",
-    element: <QualityData />, //QualityData
   },
 ]);
 
