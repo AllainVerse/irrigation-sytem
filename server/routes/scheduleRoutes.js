@@ -19,7 +19,7 @@ router.post(
 
 // farmer dan admin bisa melihat schedule
 router.get(
-  "/:plot_id/schedule/:schedule_id",
+  "/:plot_id/schedule",
   authenticateToken,
   checkRole(["farmer"]),
   getSchedules
