@@ -20,9 +20,8 @@ const Profile = () => {
     email: '',
     password: ''
   });
-  const [coverImage, setCoverImage] = useState(wallppr6); // State untuk cover yang dipilih
-  const [isModalOpen, setIsModalOpen] = useState(false); // State untuk modal
-
+  const [coverImage, setCoverImage] = useState(wallppr6); 
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile({
@@ -38,7 +37,7 @@ const Profile = () => {
 
   const handleCoverChange = (newCover) => {
     setCoverImage(newCover);
-    setIsModalOpen(false); // Tutup modal setelah memilih cover
+    setIsModalOpen(false); 
   };
 
   return (
@@ -54,7 +53,7 @@ const Profile = () => {
         />
         <button
           className="absolute bottom-7 right-3 text-gray-700 border border-gray-400 px-3 py-1 rounded-full font-poppins text-sm hover:bg-gray-100 transition-colors flex items-center gap-1"
-          onClick={() => setIsModalOpen(true)} // Buka modal ketika diklik
+          onClick={() => setIsModalOpen(true)} 
         >
           <img src={iconcover} alt="icon" className="w-4 h-4" />
           Change Cover
@@ -97,7 +96,7 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* untuk memilih wallpaper */}
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full">
@@ -179,7 +178,7 @@ const Profile = () => {
               />
             </div>
 
-            {/* Button untuk Save Changes */}
+            
             <button
               type="submit"
               className="w-full px-4 py-2 mt-6 bg-blue-600 text-white rounded-xl"
