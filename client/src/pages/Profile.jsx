@@ -20,8 +20,12 @@ const Profile = () => {
     email: '',
     password: ''
   });
+
   const [coverImage, setCoverImage] = useState(wallppr6); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [coverImage, setCoverImage] = useState(wallppr6);
+  const [isModalOpen, setIsModalOpen] = useState(false);  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile({
@@ -38,6 +42,8 @@ const Profile = () => {
   const handleCoverChange = (newCover) => {
     setCoverImage(newCover);
     setIsModalOpen(false); 
+    setIsModalOpen(false);
+
   };
 
   return (
