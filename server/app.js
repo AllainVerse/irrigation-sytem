@@ -6,6 +6,7 @@ const dataRoutes = require("./routes/dataRoutes");
 const deviceRoutes = require("./routes/deviceRoutes");
 const plantRoutes = require("./routes/plantRoutes");
 const scheduleRoutes = require("./routes/scheduleRoutes");
+const cronRoutes = require("./routes/cronRoutes");
 const cors = require("cors");
 
 require("dotenv").config();
@@ -21,6 +22,7 @@ app.use("/plots", dataRoutes);
 app.use("/plots", deviceRoutes);
 app.use("/plots", plantRoutes);
 app.use("/plots", scheduleRoutes);
+app.use("/irrigation-log", cronRoutes);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

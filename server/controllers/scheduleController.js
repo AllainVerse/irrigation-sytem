@@ -44,8 +44,10 @@ exports.createSchedule = async (req, res) => {
   }
 };
 
-// Cron job to log irrigation schedule execution
-cron.schedule("* * * * *", async () => {
+let cronJob; // Variabel untuk menyimpan instance cron job
+
+// Fungsi untuk menjalankan cron job
+const executeIrrigationTask = async () => {
   try {
     const currentTimeWIB = moment().tz("Asia/Jakarta").format("HH:mm");
     const currentDay = moment().tz("Asia/Jakarta").format("dddd");
@@ -109,7 +111,46 @@ cron.schedule("* * * * *", async () => {
   } catch (error) {
     console.error("Error in irrigation logging process:", error);
   }
-});
+};
+
+// Controller untuk memulai cron job
+exports.startCronJob = (req, res) => {
+  if (!cronJob || !cronJob.running) {
+    cronJob = cron.schedule("* * * * *", executeIrrigationTask, {
+      scheduled: true,
+    });
+    res.json({ status: "Cron job started" });
+  } else {
+    res.json({ status: "Cron job already running" });
+  }
+};
+
+// Controller untuk menghentikan cron job
+exports.stopCronJob = (req, res) => {
+  if (cronJob && cronJob.running) {
+    cronJob.stop();
+    res.json({ status: "Cron job stopped" });
+  } else {
+    res.json({ status: "Cron job is not running" });
+  }
+};
+
+// Controller untuk mengecek status cron job
+exports.getCronJobStatus = (req, res) => {
+  const status = cronJob && cronJob?.running ? "running" : "stopped";
+  res.json({ status });
+};
+
+exports.getIrrigationLog = async (req, res) => {
+  try {
+    const log = await IrrigationLog.findAll();
+    res.json(log);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching irrigation log", error: error.message });
+  }
+};
 
 // Controller to get schedules
 exports.getSchedules = async (req, res) => {
