@@ -28,7 +28,7 @@ router.get(
 router.get(
   "/schedule-log",
   authenticateToken,
-  checkRole(["admin"]),
+  checkRole(["admin, farmer"]),
   getIrrigationLog
 );
 
