@@ -22,8 +22,6 @@ const Profile = () => {
   });
 
   const [coverImage, setCoverImage] = useState(wallppr6); 
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [coverImage, setCoverImage] = useState(wallppr6);
   const [isModalOpen, setIsModalOpen] = useState(false);  
 
   const handleChange = (e) => {
