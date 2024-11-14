@@ -120,7 +120,7 @@ const Navbar = () => {
               </a>
 
               <a
-                className="hover:bg-customColor text-white font-semibold hover:text-white rounded-md  border-2 border-white  px-4 py-2 duration-200 hidden md:block"
+                className="hover:bg-customColor text-white font-semibold hover:text-white rounded-md  border-2 border-slate-50 px-4 py-2 duration-200 hidden md:block"
                 href="/register"
               >
                 Sign Up
