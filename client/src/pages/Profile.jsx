@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar/NavbarLoggedin';
 import Footer from '../components/Footer/Footer';
 import wallppr1 from '../assets/wallppr1.png';
@@ -21,10 +23,8 @@ const Profile = () => {
     password: ''
   });
 
-  const [coverImage, setCoverImage] = useState(wallppr6); 
-  const [isModalOpen, setIsModalOpen] = useState(false); 
   const [coverImage, setCoverImage] = useState(wallppr6);
-  const [isModalOpen, setIsModalOpen] = useState(false);  
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,13 +41,19 @@ const Profile = () => {
 
   const handleCoverChange = (newCover) => {
     setCoverImage(newCover);
-    setIsModalOpen(false); 
     setIsModalOpen(false);
-
   };
 
+  const { ref: profileRef, inView: profileInView } = useInView({
+    threshold: 0.1,
+  });
+
+  const { ref: modalRef, inView: modalInView } = useInView({
+    threshold: 0.1,
+  });
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
+    <motion.div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
       <Navbar className="fixed top-0 left-0 w-full z-50 bg-white shadow-md" />
       <div className="pt-16"></div>
 
@@ -59,13 +65,17 @@ const Profile = () => {
         />
         <button
           className="absolute bottom-7 right-3 text-gray-700 border border-gray-400 px-3 py-1 rounded-full font-poppins text-sm hover:bg-gray-100 transition-colors flex items-center gap-1"
-          onClick={() => setIsModalOpen(true)} 
+          onClick={() => setIsModalOpen(true)}
         >
           <img src={iconcover} alt="icon" className="w-4 h-4" />
           Change Cover
         </button>
 
-        <div className="absolute left-1/4 transform -translate-x-[86%] translate-y-[36%] w-54 h-54 sm:w-56 sm:h-56 rounded-full overflow-hidden">
+        <div
+          ref={profileRef}
+          className={`absolute left-1/4 transform -translate-x-[86%] translate-y-[36%] w-54 h-54 sm:w-56 sm:h-56 rounded-full overflow-hidden 
+            transition-all duration-700 ease-out transform ${profileInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+        >
           <img
             src={blankprofile}
             alt="Profile"
@@ -74,7 +84,11 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="p-8 w-full mt-40 flex justify-end">
+      <div
+        ref={modalRef}
+        className={`p-8 w-full mt-40 flex justify-end transition-all duration-700 ease-out 
+          ${modalInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+      >
         <div className="w-3/4 pl-12 -mt-4">
           <h2 className="text-xl text-left font-poppins font-semibold text-white flex items-left justify-start gap-2">
             Bayu Ariyo Vonda
@@ -101,7 +115,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -161,8 +174,9 @@ const Profile = () => {
                 />
               </div>
             </div>
+
             <div className="flex flex-col">
-              <label htmlFor="email" className="mb-2 font-poppins text-black">Email Address</label>
+              <label htmlFor="email" className="mb-2 font-poppins text-black">Email</label>
               <input
                 type="email"
                 id="email"
@@ -184,7 +198,6 @@ const Profile = () => {
               />
             </div>
 
-            
             <button
               type="submit"
               className="w-full px-4 py-2 mt-6 bg-blue-600 text-white rounded-xl"
@@ -196,7 +209,7 @@ const Profile = () => {
       </div>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 
