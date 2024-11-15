@@ -13,6 +13,7 @@ import DataForm from "./pages/DataForm";
 import Profile from "./pages/Profile";
 import Feature from "./pages/Feature";
 import Articlespage from "./pages/Articlespage";
+import CronJob from "./pages/Admin/CronJob";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
     element: <Admin />, // Mainboard
   },
   {
+    path: "/CronJob",
+    element: <CronJob />, // Admin
+  },
+  {
     path: "/DataForm",
     element: <DataForm />, // Mainboard
   },
@@ -62,7 +67,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/Articlespage",
-    element: <Articlespage /> //Articles Pages
+    element: <Articlespage />, //Articles Pages
   },
 ]);
 

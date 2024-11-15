@@ -1,18 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import SearchIcon from "../assets/search.png";
 import Footer from "../components/Footer/Footer";
 import NavbarLoggedin from "@/components/Navbar/NavbarLoggedin";
 
 const Log = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [logs, setLogs] = useState([]); // Initialize logs as an empty array
+  const [loading, setLoading] = useState(true); // Loading state
+
+  const fetchIrrigationLog = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:3000/irrigation-log/schedule-log", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.data;
+      // Ensure data is an array before setting it to logs
+      setLogs(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error(error);
+      setLogs([]); // Set logs to an empty array on error
+    } finally {
+      setLoading(false); // Update loading state
+    }
+  };
+
+  useEffect(() => {
+    fetchIrrigationLog(); // Fetch logs on component mount
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
       {/* Navbar */}
       <NavbarLoggedin />
-      
+
       {/* Irrigation Log Section */}
-      <section className="flex flex-col items-center mb-28 mt-28"> {/* Menambahkan margin-bottom */}
+      <section className="flex flex-col items-center mb-28 mt-28">
         <div className="w-full max-w-3xl md:max-w-5xl bg-[#DFEDC0] p-4 md:p-6 rounded-lg shadow-lg">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
             <h1 className="text-lg md:text-xl font-poppins font-bold text-black">
@@ -48,36 +73,52 @@ const Log = () => {
 
           {/* Tabel Log Irigasi */}
           <div className="overflow-x-auto">
-          <table className="w-full text-center text-black mb-12">
-            <thead>
-              <tr className="border-b-2 border-black">
-                <th className="py-2 px-2 md:px-3 font-poppins font-medium">Tanggal</th>
-                <th className="py-2 px-2 md:px-3 font-poppins font-medium">Waktu Mulai</th>
-                <th className="py-2 px-2 md:px-3 font-poppins font-medium">Waktu Selesai</th>
-                <th className="py-2 px-2 md:px-3 font-poppins font-medium">Water Used</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-black">
-                <td className="py-2 px-2 md:px-3 font-poppins">7 Juni</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">4:00 PM</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">5:00 PM</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">10 L</td>
-              </tr>
-              <tr className="border-b border-black">
-                <td className="py-2 px-2 md:px-3 font-poppins">8 Juni</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">4:00 PM</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">5:00 PM</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">15 L</td>
-              </tr>
-              <tr className="border-b border-black">
-                <td className="py-2 px-2 md:px-3 font-poppins">10 Juni</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">7:00 AM</td>
-                <td className="py-2 px-2 md:px-3 font-poppins">8:00 AM</td>
-                <td className="py-2 px-2 md:px-5 font-poppins">5 L</td>
-              </tr>
-            </tbody>
-          </table>
+            {loading ? (
+              <p className="text-black text-center">Loading...</p>
+            ) : (
+              <table className="w-full text-center text-black mb-12">
+                <thead>
+                  <tr className="border-b-2 border-black">
+                    <th className="py-2 px-2 md:px-3 font-poppins font-medium">
+                      Plot ID
+                    </th>
+                    <th className="py-2 px-2 md:px-3 font-poppins font-medium">
+                      Tanggal
+                    </th>
+                    <th className="py-2 px-2 md:px-3 font-poppins font-medium">
+                      Waktu Mulai
+                    </th>
+                    <th className="py-2 px-2 md:px-3 font-poppins font-medium">
+                      Waktu Selesai
+                    </th>
+                    <th className="py-2 px-2 md:px-3 font-poppins font-medium">
+                      Water Used
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {logs.map((log, index) => (
+                    <tr key={index} className="border-b border-black">
+                      <td className="py-2 px-2 md:px-3 font-poppins">
+                        {log.plot_id}
+                      </td>
+                      <td className="py-2 px-2 md:px-3 font-poppins">
+                        {log.log_date}
+                      </td>
+                      <td className="py-2 px-2 md:px-3 font-poppins">
+                        {log.start_time}
+                      </td>
+                      <td className="py-2 px-2 md:px-3 font-poppins">
+                        {log.end_time}
+                      </td>
+                      <td className="py-2 px-2 md:px-3 font-poppins">
+                        {log.water_used} L
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </section>

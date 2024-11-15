@@ -10,6 +10,7 @@ import LogAdmin from "./LogAdmin";
 import PlotConfig from "./PlotConfig";
 import SensorConfig from "./SensorConfig";
 import QualityData from "./QualityData";
+import CronJob from "./CronJob";
 
 const Admin = () => {
   const [activePage, setActivePage] = useState("Admin"); // State halaman aktif
@@ -20,7 +21,7 @@ const Admin = () => {
     { name: "Plot Configuration", icon: AiOutlineUser },
     { name: "Sensor Configuration", icon: FiMessageSquare },
     { name: "Plot Quality", icon: TbReportAnalytics },
-    // { name: "File Manager", icon: FiFolder },
+    { name: "Cron Job", icon: FiFolder },
     // { name: "Cart", icon: FiShoppingCart },
     // { name: "Saved", icon: AiOutlineHeart, margin: true },
     // { name: "Setting", icon: RiSettings4Line },
@@ -95,6 +96,13 @@ const Admin = () => {
         <div>
           {activePage === "Plot Quality" ? (
             <QualityData />
+          ) : (
+            null
+          )}
+        </div>
+        <div>
+          {activePage === "Cron Job" ? (
+            <CronJob />
           ) : (
             null
           )}
