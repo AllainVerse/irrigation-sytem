@@ -1,5 +1,9 @@
 const express = require("express");
-const { predictPlant, getDataPlot } = require("../controllers/dataController");
+const {
+  predictPlant,
+  getDataPlot,
+  getAllData,
+} = require("../controllers/dataController");
 const checkRole = require("../middlewares/checkRole");
 const authenticateToken = require("../middlewares/authenticateToken");
 
@@ -18,5 +22,7 @@ router.get(
   checkRole(["admin", "farmer"]),
   getDataPlot
 );
+
+router.get("/all", authenticateToken, checkRole(["admin"]), getAllData);
 
 module.exports = router;

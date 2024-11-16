@@ -82,3 +82,14 @@ exports.getDataPlot = async (req, res) => {
       .json({ message: "Error fetching Data Plot", error: error.message });
   }
 };
+
+exports.getAllData = async (req, res) => {
+  try {
+    const data = await SensorData.findAll();
+    res.json(data);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching Data Plot", error: error.message });
+  }
+};
