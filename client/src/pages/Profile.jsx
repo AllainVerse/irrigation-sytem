@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { motion } from 'framer-motion';
-import Navbar from '../components/Navbar/NavbarLoggedin';
-import Footer from '../components/Footer/Footer';
-import wallppr1 from '../assets/wallppr1.png';
-import blankprofile from '../assets/blankprofile.png';
-import iconcover from '../assets/iconcover.png';
-import Calender2 from '../assets/Calender2.png';
-import Location from '../assets/Location.png';
-import iconverified from '../assets/iconverified.png';
-import Job from '../assets/Job.png';
-import wallppr6 from '../assets/wallppr6.png';
-import wallppr2 from '../assets/wallppr2.png';
-import wallppr3 from '../assets/wallppr3.png';
-import wallppr4 from '../assets/wallppr4.png';
+import React, { useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
+import Navbar from "../components/Navbar/NavbarLoggedin";
+import Footer from "../components/Footer/Footer";
+import wallppr1 from "../assets/wallppr1.png";
+import blankprofile from "../assets/blankprofile.png";
+import iconcover from "../assets/iconcover.png";
+import Calender2 from "../assets/Calender2.png";
+import Location from "../assets/Location.png";
+import iconverified from "../assets/iconverified.png";
+import Job from "../assets/Job.png";
+import wallppr6 from "../assets/wallppr6.png";
+import wallppr2 from "../assets/wallppr2.png";
+import wallppr3 from "../assets/wallppr3.png";
+import wallppr4 from "../assets/wallppr4.png";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   });
-
 
   const [coverImage, setCoverImage] = useState(wallppr6);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,13 +30,13 @@ const Profile = () => {
     const { name, value } = e.target;
     setProfile({
       ...profile,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Profile updated:', profile);
+    console.log("Profile updated:", profile);
   };
 
   const handleCoverChange = (newCover) => {
@@ -75,7 +74,11 @@ const Profile = () => {
         <div
           ref={profileRef}
           className={`absolute left-1/4 transform -translate-x-[86%] translate-y-[36%] w-54 h-54 sm:w-56 sm:h-56 rounded-full overflow-hidden 
-            transition-all duration-700 ease-out transform ${profileInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            transition-all duration-700 ease-out transform ${
+              profileInView
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-6"
+            }`}
         >
           <img
             src={blankprofile}
@@ -88,7 +91,11 @@ const Profile = () => {
       <div
         ref={modalRef}
         className={`p-8 w-full mt-40 flex justify-end transition-all duration-700 ease-out 
-          ${modalInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          ${
+            modalInView
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-6"
+          }`}
       >
         <div className="w-3/4 pl-12 -mt-4">
           <h2 className="text-xl text-left font-poppins font-semibold text-white flex items-left justify-start gap-2">
@@ -122,15 +129,17 @@ const Profile = () => {
           <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full">
             <h3 className="text-lg font-bold mb-4">Select a Cover Image</h3>
             <div className="grid grid-cols-3 gap-4">
-              {[wallppr1, wallppr2, wallppr3, wallppr4, wallppr6].map((wallpaper, index) => (
-                <img
-                  key={index}
-                  src={wallpaper}
-                  alt={`wallpaper${index + 1}`}
-                  className="cursor-pointer rounded-lg w-full h-32 object-cover"
-                  onClick={() => handleCoverChange(wallpaper)}
-                />
-              ))}
+              {[wallppr1, wallppr2, wallppr3, wallppr4, wallppr6].map(
+                (wallpaper, index) => (
+                  <img
+                    key={index}
+                    src={wallpaper}
+                    alt={`wallpaper${index + 1}`}
+                    className="cursor-pointer rounded-lg w-full h-32 object-cover"
+                    onClick={() => handleCoverChange(wallpaper)}
+                  />
+                )
+              )}
             </div>
             <button
               onClick={() => setIsModalOpen(false)}
@@ -145,7 +154,9 @@ const Profile = () => {
       <div className="relative max-w-5xl mx-auto mb-12">
         <div className="absolute top-[-56px] right-0">
           <div className="px-8 py-10 bg-[#DFEDC0] rounded-3xl">
-            <span className="relative font-poppins font-bold text-black top-[-22px]">Edit Profile</span>
+            <span className="relative font-poppins font-bold text-black top-[-22px]">
+              Edit Profile
+            </span>
           </div>
         </div>
 
@@ -153,7 +164,12 @@ const Profile = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="flex gap-4">
               <div className="flex flex-col w-1/2">
-                <label htmlFor="firstName" className="mb-2 font-poppins text-black">First Name</label>
+                <label
+                  htmlFor="firstName"
+                  className="mb-2 font-poppins text-black"
+                >
+                  First Name
+                </label>
                 <input
                   type="text"
                   id="firstName"
@@ -164,7 +180,12 @@ const Profile = () => {
                 />
               </div>
               <div className="flex flex-col w-1/2">
-                <label htmlFor="lastName" className="mb-2 font-poppins text-black">Last Name</label>
+                <label
+                  htmlFor="lastName"
+                  className="mb-2 font-poppins text-black"
+                >
+                  Last Name
+                </label>
                 <input
                   type="text"
                   id="lastName"
@@ -177,7 +198,9 @@ const Profile = () => {
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="email" className="mb-2 font-poppins text-black">Email</label>
+              <label htmlFor="email" className="mb-2 font-poppins text-black">
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
@@ -188,7 +211,12 @@ const Profile = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="password" className="mb-2 font-poppins text-black">Password</label>
+              <label
+                htmlFor="password"
+                className="mb-2 font-poppins text-black"
+              >
+                Password
+              </label>
               <input
                 type="password"
                 id="password"

@@ -16,7 +16,12 @@ router.post(
   startCronJob
 );
 
-router.post("/stop-cron", authenticateToken, checkRole(["admin"]), stopCronJob);
+router.post(
+  "/stop-cron", 
+  authenticateToken, 
+  checkRole(["admin"]), 
+  stopCronJob
+);
 
 router.get(
   "/status-cron",
@@ -28,7 +33,7 @@ router.get(
 router.get(
   "/schedule-log",
   authenticateToken,
-  checkRole(["admin, farmer"]),
+  checkRole(["admin", "farmer"]),
   getIrrigationLog
 );
 

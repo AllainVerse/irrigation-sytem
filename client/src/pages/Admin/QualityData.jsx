@@ -1,12 +1,10 @@
-  import React, { useState } from "react";
-import Footer from "../../components/Footer/Footer";
-import NavbarLoggedin from "@/components/Navbar/NavbarLoggedin";
+import React, { useState } from "react";
 
 const QualityData = () => {
   return (
     <>
       {/* Irrigation Log Section */}
-      <section className="flex flex-col items-center mb-28 mt-28">
+      <section className="flex flex-col items-center md:py-10 mb-10">
         {" "}
         {/* Menambahkan margin-bottom */}
         <div className="w-full max-w-3xl md:max-w-5xl bg-[#DFEDC0] p-4 md:p-6 rounded-lg shadow-lg">
