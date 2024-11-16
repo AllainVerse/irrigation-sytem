@@ -1,5 +1,6 @@
 const { Schedule, IrrigationLog } = require("../models"); // Adjust the path as necessary
 const cron = require("node-cron");
+const cronJobManager = require("./cronJobManager");
 const { Op } = require("sequelize");
 const moment = require("moment-timezone");
 
@@ -44,8 +45,6 @@ exports.createSchedule = async (req, res) => {
   }
 };
 
-let cronJob; // Variabel untuk menyimpan instance cron job
-
 // Fungsi untuk menjalankan cron job
 const executeIrrigationTask = async () => {
   try {
@@ -53,18 +52,30 @@ const executeIrrigationTask = async () => {
     const currentDay = moment().tz("Asia/Jakarta").format("dddd");
     const currentDate = moment().tz("Asia/Jakarta").date();
 
+    console.log("Current Time WIB:", currentTimeWIB); // Debug: Cetak waktu saat ini
+    console.log("Current Day:", currentDay); // Debug: Cetak hari saat ini
+    console.log("Current Date:", currentDate); // Debug: Cetak tanggal saat ini
+
+    // Menyaring jadwal berdasarkan waktu yang sesuai dengan currentTimeWIB
     const schedules = await Schedule.findAll({
       where: {
         start_time: {
-          [Op.lte]: currentTimeWIB,
+          [Op.lte]: currentTimeWIB, // Start time kurang dari atau sama dengan current time
         },
         end_time: {
-          [Op.gte]: currentTimeWIB,
+          [Op.gte]: currentTimeWIB, // End time lebih besar atau sama dengan current time
         },
       },
     });
 
+    // Debug: Lihat apakah schedules ditemukan
+    console.log("Schedules found:", schedules.length);
+
     for (const schedule of schedules) {
+      console.log(
+        `Checking schedule: Start Time - ${schedule.start_time}, End Time - ${schedule.end_time}`
+      ); // Debug: Lihat jadwal yang sedang diproses
+
       let shouldExecute = false;
 
       if (schedule.frequency === "daily") {
@@ -80,10 +91,12 @@ const executeIrrigationTask = async () => {
           where: {
             schedule_id: schedule.schedule_id,
             log_date: moment().tz("Asia/Jakarta").format("YYYY-MM-DD"),
-            start_time: schedule.start_time, // Check start_time to allow multiple logs per day
+            start_time: schedule.start_time,
+            end_time: schedule.end_time,
           },
         });
 
+        // Debug: Jika log sudah ada atau belum
         if (!existingLog) {
           const durationInHours = moment(schedule.end_time, "HH:mm").diff(
             moment(schedule.start_time, "HH:mm"),
@@ -91,7 +104,7 @@ const executeIrrigationTask = async () => {
             true
           );
 
-          const waterUsed = durationInHours * 5; // Assume 5 liters per hour
+          const waterUsed = durationInHours * 5; // Asumsi 5 liter per jam
 
           await IrrigationLog.create({
             schedule_id: schedule.schedule_id,
@@ -105,7 +118,11 @@ const executeIrrigationTask = async () => {
           console.log(
             `Irrigation log created for Schedule ID: ${schedule.schedule_id}, Water used: ${waterUsed} liters`
           );
+        } else {
+          console.log("Irrigation log already exists for this schedule.");
         }
+      } else {
+        console.log("Schedule doesn't meet the criteria for execution.");
       }
     }
   } catch (error) {
@@ -115,29 +132,21 @@ const executeIrrigationTask = async () => {
 
 // Controller untuk memulai cron job
 exports.startCronJob = (req, res) => {
-  if (!cronJob || !cronJob.running) {
-    cronJob = cron.schedule("* * * * *", executeIrrigationTask, {
-      scheduled: true,
-    });
-    res.json({ status: "Cron job started" });
-  } else {
-    res.json({ status: "Cron job already running" });
-  }
+  console.log("Attempting to start cron job");
+  cronJobManager.start(executeIrrigationTask);
+  const status = cronJobManager.isRunning() ? "running" : "stopped";
+  res.json({ status: `Cron job status: ${status}` });
 };
 
 // Controller untuk menghentikan cron job
 exports.stopCronJob = (req, res) => {
-  if (cronJob && cronJob.running) {
-    cronJob.stop();
-    res.json({ status: "Cron job stopped" });
-  } else {
-    res.json({ status: "Cron job is not running" });
-  }
+  cronJobManager.stop();
+  res.json({ status: "Cron job stopped" });
 };
 
 // Controller untuk mengecek status cron job
 exports.getCronJobStatus = (req, res) => {
-  const status = cronJob && cronJob?.running ? "running" : "stopped";
+  const status = cronJobManager.isRunning() ? "running" : "stopped";
   res.json({ status });
 };
 
