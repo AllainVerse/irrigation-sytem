@@ -9,6 +9,7 @@ import wheater from '../assets/Features/wheater.svg';
 import irrigodesign from '../assets/irrigodesign.svg';
 import soil from '../assets/soil.jpg';
 import NavbarLoggedin from '@/components/Navbar/NavbarLoggedin';
+import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import farmVideo from '../assets/farm1.mp4';
 
@@ -57,7 +58,7 @@ const Feature = () => {
       transition={{ duration: 0.8, ease: 'easeInOut' }}
       className="min-h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white"
     >
-      <NavbarLoggedin />
+      {localStorage.getItem('token') ? <NavbarLoggedin /> : <Navbar />}
 
       {/* Header with Background Video */}
       <div className="relative w-full h-80 flex items-center justify-center text-center overflow-hidden">

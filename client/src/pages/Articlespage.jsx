@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import NavbarLoggedin from '@/components/Navbar/NavbarLoggedin';
+import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import farmVideo from '../assets/farm2.mp4';
 import humanImage from '../assets/human1.svg';
@@ -31,7 +32,7 @@ const Articlespage = () => {
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className="min-h-screen bg-gradient-to-b from-[#16332F] via-[#16332F] to-[#2F6D3C] text-white"
     >
-      <NavbarLoggedin />
+      {localStorage.getItem('token') ? <NavbarLoggedin /> : <Navbar />}
 
       {/* Header Video Section */}
       <div className="relative w-full h-80 flex items-center justify-center text-center overflow-hidden">
