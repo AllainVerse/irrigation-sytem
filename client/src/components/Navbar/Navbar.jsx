@@ -83,13 +83,13 @@ const Navbar = () => {
             Home
           </a>
           <a
-            href="#"
+            href="/Feature"
             className="block md:inline-block mx-auto py-2 md:py-0 text-[#DFEDC0] font-Inter font-bold transition duration-700ms ease-in-out hover:text-[#ffffff] hover:underline hover:underline-offset-4"
           >
             Features
           </a>
           <a
-            href="#"
+            href="/Articlespage"
             className="block md:inline-block mx-auto py-2 md:py-0 text-[#DFEDC0] font-inter font-bold transition duration-700ms ease-in-out hover:text-[#ffffff] hover:underline hover:underline-offset-4"
           >
             Articles
