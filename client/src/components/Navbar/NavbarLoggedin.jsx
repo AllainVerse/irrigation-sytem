@@ -111,13 +111,22 @@ const NavbarLoggedin = () => {
           className={`${isNavOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
             } transition-all duration-500 ease-in-out overflow-hidden md:flex items-center text-sm absolute md:static top-16 left-0 w-full md:w-auto bg-primary md:bg-transparent md:space-x-11 text-center md:opacity-100 md:max-h-full`}
         >
-          <a href="/Mainboard" className="text-[#DFEDC0] font-inter font-bold hover:underline">
+         <a
+            href="/Mainboard"
+            className="block md:inline-block mx-auto py-2 md:py-0 text-[#DFEDC0] font-inter font-bold transition duration-700ms ease-in-out hover:text-[#ffffff] hover:underline hover:underline-offset-4"
+          >
             Home
           </a>
-          <a href="/Feature" className="text-[#DFEDC0] font-inter font-bold hover:underline">
+          <a
+            href="/Feature"
+            className="block md:inline-block mx-auto py-2 md:py-0 text-[#DFEDC0] font-Inter font-bold transition duration-700ms ease-in-out hover:text-[#ffffff] hover:underline hover:underline-offset-4"
+          >
             Features
           </a>
-          <a href="/Articlespage" className="text-[#DFEDC0] font-inter font-bold hover:underline">
+          <a
+            href="/Articlespage"
+            className="block md:inline-block mx-auto py-2 md:py-0 text-[#DFEDC0] font-inter font-bold transition duration-700ms ease-in-out hover:text-[#ffffff] hover:underline hover:underline-offset-4"
+          >
             Articles
           </a>
 
