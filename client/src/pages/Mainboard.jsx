@@ -22,6 +22,9 @@ const Mainboard = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [selectedFrequency, setSelectedFrequency] = useState("");
+  const [CropName, setCropName] = useState("");
+  const [optimalMoisture, setOptimalMoisture] = useState("");
+  const [waterRequirement, setWaterRequirement] = useState("");
 
   const navigate = useNavigate();
 
@@ -77,6 +80,32 @@ const Mainboard = () => {
     } catch (error) {
       console.error("Error fetching schedule:", error);
       setSchedules([]); // Tetapkan array kosong jika ada error
+    }
+  };
+
+  const handleCreatePlantNeed = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const plot_id = selectedPlotId; // assuming you have the plot_id stored in state
+      const crop_name = CropName; // replace with actual crop name
+      const optimal_moisture = optimalMoisture; // replace with actual optimal moisture
+      const water_requirement = waterRequirement; // replace with actual water requirement
+
+      const response = await axios.post(
+        `http://localhost:3000/plots/${plot_id}/plant-needs`,
+        {
+          crop_name,
+          optimal_moisture,
+          water_requirement,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      console.log("Plant need created successfully:", response.data);
+    } catch (error) {
+      console.error("Error creating plant need:", error);
     }
   };
 
@@ -247,6 +276,8 @@ const Mainboard = () => {
             type="text"
             className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full"
             placeholder="Jenis Tanaman"
+            value={CropName}
+            onChange={(e) => setCropName(e.target.value)}
           />
 
           {/* <select className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center">
@@ -268,11 +299,15 @@ const Mainboard = () => {
               type="text"
               className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full mr-5"
               placeholder="Optimal Moisture"
+              value={optimalMoisture}
+              onChange={(e) => setOptimalMoisture(e.target.value)}
             />
             <input
               type="text"
               className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full"
               placeholder="Water Requirement"
+              value={waterRequirement}
+              onChange={(e) => setWaterRequirement(e.target.value)}
             />
           </div>
 
@@ -292,12 +327,15 @@ const Mainboard = () => {
               Input Sensor Data
             </button>
 
-            <button className="bg-[#F5F5DC] text-black font-poppins font-semibold p-2 rounded-lg w-[48%] transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
+            <button
+              onClick={handleCreatePlantNeed}
+              className="bg-[#F5F5DC] text-black font-poppins font-semibold p-2 rounded-lg w-[48%] transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
+            >
               Input Plant Needs
             </button>
 
             <button
-              className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%]"
+              className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%] hover:scale-105"
               type="button"
             >
               <svg
@@ -314,10 +352,11 @@ const Mainboard = () => {
                   d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                 />
               </svg>
+              {/* Edit Button */}
             </button>
 
             <button
-              className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%]" // Adjusted the width
+              className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%] hover:scale-105" // Adjusted the width
               type="button"
             >
               <svg
@@ -334,6 +373,7 @@ const Mainboard = () => {
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                 />
               </svg>
+              {/* Delete Button */} 
             </button>
           </div>
 
