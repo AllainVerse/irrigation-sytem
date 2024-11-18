@@ -243,11 +243,17 @@ const Mainboard = () => {
             <option value="monthly">Monthly</option>
           </select>
 
-          <select className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center">
+          <input
+            type="text"
+            className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full"
+            placeholder="Jenis Tanaman"
+          />
+
+          {/* <select className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center">
             <option>Pilih Sensor</option>
             <option>Sensor 1</option>
             <option>Sensor 2</option>
-          </select>
+          </select> */}
 
           <input
             type="time"
@@ -257,11 +263,18 @@ const Mainboard = () => {
             value={startTime}
           />
 
-          <input
-            type="text"
-            className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full"
-            placeholder="Jenis Tanaman"
-          />
+          <div className="flex justify-between w-full">
+            <input
+              type="text"
+              className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full mr-5"
+              placeholder="Optimal Moisture"
+            />
+            <input
+              type="text"
+              className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full"
+              placeholder="Water Requirement"
+            />
+          </div>
 
           <input
             type="time"
@@ -271,12 +284,56 @@ const Mainboard = () => {
             value={endTime}
           />
 
-          <div className="flex justify-start col-start-1">
+          <div className="flex justify-between w-full gap-3">
             <button
               onClick={handleInputDataClick}
-              className="bg-[#F5F5DC] text-black font-poppins font-semibold p-2 rounded-lg w-2/3 transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
+              className="bg-[#F5F5DC] text-black font-poppins font-semibold p-2 rounded-lg w-[48%] transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
             >
-              Input Data
+              Input Sensor Data
+            </button>
+
+            <button className="bg-[#F5F5DC] text-black font-poppins font-semibold p-2 rounded-lg w-[48%] transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
+              Input Plant Needs
+            </button>
+
+            <button
+              className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%]"
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
+            </button>
+
+            <button
+              className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%]" // Adjusted the width
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
             </button>
           </div>
 
