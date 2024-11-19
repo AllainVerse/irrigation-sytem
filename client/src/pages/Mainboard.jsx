@@ -22,9 +22,11 @@ const Mainboard = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [selectedFrequency, setSelectedFrequency] = useState("");
+
   const [CropName, setCropName] = useState("");
   const [optimalMoisture, setOptimalMoisture] = useState("");
   const [waterRequirement, setWaterRequirement] = useState("");
+  const [plantNeeds, setPlantNeeds] = useState({});
 
   const navigate = useNavigate();
 
@@ -36,6 +38,7 @@ const Mainboard = () => {
     if (plot_id) {
       fetchPlotData(plot_id);
       fetchIrrigationSchedule(plot_id);
+      fetchPlantNeeds(plot_id);
     }
   }, [plot_id]);
 
@@ -83,6 +86,25 @@ const Mainboard = () => {
     }
   };
 
+  const fetchPlantNeeds = async (plot_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:3000/plots/${plot_id}/plant-needs`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (Array.isArray(response.data)) {
+        setPlantNeeds(response.data); // If response.data is an array, set it to plantNeeds
+      } else {
+        setPlantNeeds([response.data]); // If response.data is an object, wrap it in an array
+      }
+    } catch (error) {
+      console.error("Error fetching plant needs:", error);
+    }
+  };
+
   const handleCreatePlantNeed = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -107,6 +129,35 @@ const Mainboard = () => {
     } catch (error) {
       console.error("Error creating plant need:", error);
     }
+  };
+
+  const handleUpdatePlantNeed = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `http://localhost:3000/plots/${plot_id}/plant-needs`,
+        {
+          crop_name: CropName,
+          optimal_moisture: optimalMoisture,
+          water_requirement: waterRequirement,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      alert("Schedule updated successfully!");
+      await fetchPlantNeeds(plot_id); 
+    } catch (error) {
+      console.error("Error updating plant needs:", error);
+      alert("Failed to update plant needs. Please try again.");
+    }
+  };
+
+  const handleEditPlant = ( plantNeeds ) => {
+    setCropName(plantNeeds.crop_name);
+    setOptimalMoisture(plantNeeds.optimal_moisture);
+    setWaterRequirement(plantNeeds.water_requirement);
   };
 
   const handlePlotChange = (event) => {
@@ -280,12 +331,6 @@ const Mainboard = () => {
             onChange={(e) => setCropName(e.target.value)}
           />
 
-          {/* <select className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold text-center">
-            <option>Pilih Sensor</option>
-            <option>Sensor 1</option>
-            <option>Sensor 2</option>
-          </select> */}
-
           <input
             type="time"
             className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold col-start-1 sm:col-start-2 text-center"
@@ -294,10 +339,10 @@ const Mainboard = () => {
             value={startTime}
           />
 
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full gap-4">
             <input
               type="text"
-              className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full mr-5"
+              className="p-2 rounded-lg bg-[#F5F5DC] text-black font-poppins font-semibold w-full"
               placeholder="Optimal Moisture"
               value={optimalMoisture}
               onChange={(e) => setOptimalMoisture(e.target.value)}
@@ -335,27 +380,14 @@ const Mainboard = () => {
             </button>
 
             <button
-              className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%] hover:scale-105"
+              className="p-2 px-5 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center hover:scale-105"
               type="button"
+              onClick={handleUpdatePlantNeed}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                />
-              </svg>
-              {/* Edit Button */}
+              Update
             </button>
 
-            <button
+            {/* <button
               className="p-1 rounded-md bg-[#F5F5DC] text-black font-poppins font-semibold flex items-center justify-center w-[8%] hover:scale-105" // Adjusted the width
               type="button"
             >
@@ -373,8 +405,8 @@ const Mainboard = () => {
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                 />
               </svg>
-              {/* Delete Button */} 
-            </button>
+              {/* Delete Button */}
+            {/* </button> */}
           </div>
 
           <div className="flex justify-between col-start-1 sm:col-start-2 w-full">
@@ -517,6 +549,59 @@ const Mainboard = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="border border-black p-4 rounded-md bg-gradient-to-r from-green-300 to-green-500 my-4">
+          {Array.isArray(plantNeeds) ? (
+            plantNeeds.map((plant, index) => (
+              <div
+                key={index}
+                className="flex justify-between items-center mb-2"
+              >
+                <div>
+                  <p className="font-bold">Crop Name: {plant.crop_name}</p>
+                  <p>Optimal Moisture: {plant.optimal_moisture}</p>
+                  <p>Water Requirement: {plant.water_requirement}</p>
+                </div>
+                <div>
+                  <button
+                    onClick={() => handleEditPlant(plant)}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md mr-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeletePlant(plant.crop_id)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="flex justify-between items-center mb-2">
+              <div>
+                <p className="font-bold">Crop Name: {plantNeeds.crop_name}</p>
+                <p>Optimal Moisture: {plantNeeds.optimal_moisture}</p>
+                <p>Water Requirement: {plantNeeds.water_requirement}</p>
+              </div>
+              <div>
+                <button
+                  onClick={handleEditPlant}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md mr-2"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeletePlant(plantNeeds.crop_id)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
