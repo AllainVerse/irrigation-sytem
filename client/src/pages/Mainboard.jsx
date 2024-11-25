@@ -28,6 +28,17 @@ const Mainboard = () => {
   const [waterRequirement, setWaterRequirement] = useState("");
   const [plantNeeds, setPlantNeeds] = useState({});
 
+  const role = localStorage.getItem("role");
+
+  if (role !== "farmer") {
+    // window.location.href = "/login";
+    alert("Anda tidak memiliki akses sebagai farmer!");
+    setTimeout(() => {
+      window.location.href = "/admin";
+    });
+  }
+
+
   const navigate = useNavigate();
 
   useEffect(() => {

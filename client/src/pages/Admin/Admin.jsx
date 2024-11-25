@@ -16,6 +16,16 @@ const Admin = () => {
   const [activePage, setActivePage] = useState("Admin"); // State halaman aktif
   const [open, setOpen] = useState(true);
 
+  const role = localStorage.getItem("role");
+
+  if (role !== "admin") {
+    // window.location.href = "/login";
+    alert("Anda tidak memiliki akses sebagai admin!");
+    setTimeout(() => {
+      window.location.href = "/mainboard";
+    });
+  }
+
   const menus = [
     { name: "Irrigation Log", icon: MdOutlineDashboard },
     { name: "Plot Configuration", icon: AiOutlineUser },
