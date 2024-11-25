@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 
 const SensorConfig = () => {
   const [plots, setPlots] = useState([]);
   const [plotId, setPlotId] = useState(""); // Plot ID yang dipilih
   const [deviceName, setDeviceName] = useState(""); // Nama sensor
-  const [devices, setDevices] = useState([]); // Daftar perangkat yang dibuat
+  const [devices, setDevices] = useState([]); // Daftar perangkat untuk plot yang dipilih
+
+  useEffect(() => {
+    fetchPlots();
+  }, []);
+
+  useEffect(() => {
+    fetchDevices(); // Panggil fetchDevices setiap kali plotId berubah
+  }, [plotId]);
+
+  const handleChangePlot = (e) => {
+    console.log("Selected Plot ID:", e.target.value);
+    setPlotId(e.target.value);
+  };
 
   const fetchPlots = async () => {
     try {
@@ -21,13 +33,29 @@ const SensorConfig = () => {
     }
   };
 
-  useEffect(() => {
-    fetchPlots();
-    fetchDevices();
-  }, []);
+  const fetchDevices = async () => {
+    if (!plotId) return; // Jangan lanjutkan jika plotId belum dipilih
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:3000/plots/${plotId}/devices/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log("Fetched Devices:", response.data);
+      if (Array.isArray(response.data)) {
+        setDevices(response.data);
+      } else {
+        console.error("Unexpected data format:", response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching devices:", error);
+    }
+  };
 
   const createDevice = async (e) => {
-    e.preventDefault(); // Mencegah reload halaman
+    e.preventDefault();
     if (!plotId || !deviceName) {
       alert("Plot dan nama sensor harus diisi!");
       return;
@@ -37,9 +65,7 @@ const SensorConfig = () => {
       const token = localStorage.getItem("token");
       const response = await axios.post(
         `http://localhost:3000/plots/${plotId}/devices/`,
-        {
-          device_name: deviceName,
-        },
+        { device_name: deviceName },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -54,20 +80,34 @@ const SensorConfig = () => {
     }
   };
 
-  const fetchDevices = async () => {
+  const handleDeleteDevice = async (device_id) => {
+    if (!plotId || !device_id) {
+      alert("Plot ID atau Device ID tidak valid!");
+      return;
+    }
+
+    console.log("Deleting device with ID:", device_id);
     try {
       const token = localStorage.getItem("token");
-      const plotId = plotId; // assuming plotId is defined somewhere in your component
-      const response = await axios.get(
-        `http://localhost:3000/plots/${plotId}/devices/`,
+      await axios.delete(
+        `http://localhost:3000/plots/${plotId}/devices/${device_id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("Fetched Devices:", response.data);
-      setDevices(response.data); // assuming setDevices is a state update function
+      console.log("Device successfully deleted");
+
+      // Hapus perangkat dari daftar lokal tanpa fetch ulang
+      setDevices((prevDevices) =>
+        prevDevices.filter((device) => device.id !== device_id)
+      );
+
+      alert("Perangkat berhasil dihapus!");
+      // Fetch ulang daftar perangkat setelah penghapusan
+      fetchDevices();
     } catch (error) {
-      console.error("Error fetching devices:", error);
+      console.error("Error deleting device:", error.response || error);
+      alert("Gagal menghapus perangkat. Silakan coba lagi.");
     }
   };
 
@@ -98,20 +138,21 @@ const SensorConfig = () => {
           </thead>
           <tbody>
             {devices.map((device, index) => (
-              <tr key={device.id} className="border-b border-black">
+              <tr
+                key={device.device_id || index}
+                className="border-b border-black"
+              >
                 <td className="py-2 px-2 md:px-3 font-poppins">{index + 1}.</td>
                 <td className="py-2 px-2 md:px-3 font-poppins">
                   {device.device_name}
                 </td>
                 <td className="py-2 px-2 md:px-3 font-poppins">
-                  <div className="flex gap-2">
-                    <button className="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-2 rounded-md">
-                      Edit
-                    </button>
-                    <button className="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded-md">
-                      Delete
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleDeleteDevice(device.device_id)}
+                    className="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded-md"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -141,6 +182,7 @@ const SensorConfig = () => {
               </option>
             ))}
           </select>
+
           <label htmlFor="deviceName" className="font-poppins text-black">
             Nama Sensor
           </label>
