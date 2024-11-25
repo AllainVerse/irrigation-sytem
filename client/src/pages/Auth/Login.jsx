@@ -22,12 +22,20 @@ const Login = () => {
       console.log(response); // Check the entire response object
       console.log(response.data); // Check the data field
 
-      const { token, name } = response.data; // Make sure `token` exists in response
+      const { token, name, role } = response.data; // Tambahkan 'role' pada destructuring
 
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("name", name);
-        window.location.href = "/Mainboard";
+        localStorage.setItem("role", role); // Simpan role pada localStorage
+
+        if (role === "farmer") {
+          window.location.href = "/Mainboard";
+        } else if (role === "admin") {
+          window.location.href = "/Admin";
+        } else {
+          throw new Error("Invalid role");
+        }
       } else {
         throw new Error("Login failed: token not provided");
       }
