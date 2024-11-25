@@ -6,6 +6,7 @@ const SensorConfig = () => {
   const [plotId, setPlotId] = useState(""); // Plot ID yang dipilih
   const [deviceName, setDeviceName] = useState(""); // Nama sensor
   const [devices, setDevices] = useState([]); // Daftar perangkat untuk plot yang dipilih
+  const [editingDevice, setEditingDevice] = useState(null);
 
   useEffect(() => {
     fetchPlots();
@@ -111,6 +112,85 @@ const SensorConfig = () => {
     }
   };
 
+  const handleEditDevice = (device_id) => {
+    const deviceToEdit = devices.find(
+      (device) => device.device_id === device_id
+    );
+    setEditingDevice(deviceToEdit);
+    setDeviceName(deviceToEdit.device_name); // Isi form dengan nama sensor yang akan diedit
+  };
+
+  const handleUpdateDevice = async (device_id, device_name) => {
+    try {
+      const token = localStorage.getItem("token");
+      const plotId = "your_plot_id_here"; // Replace with the actual plot ID
+      const response = await axios.put(
+        `http://localhost:3000/plots/${plotId}/devices/${device_id}`,
+        { device_name },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log("Device updated:", response.data);
+    } catch (error) {
+      console.error("Error updating device:", error);
+    }
+  };
+
+  const saveDevice = async (e) => {
+    e.preventDefault();
+
+    if (!deviceName) {
+      alert("Nama sensor harus diisi!");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+
+    try {
+      if (editingDevice) {
+        // Jika dalam mode edit, panggil handleUpdateDevice
+        const response = await axios.put(
+          `http://localhost:3000/plots/${plotId}/devices/${editingDevice.device_id}`,
+          { device_name: deviceName },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log("Device updated:", response.data);
+
+        // Perbarui daftar perangkat lokal
+        setDevices((prevDevices) =>
+          prevDevices.map((device) =>
+            device.device_id === editingDevice.device_id
+              ? { ...device, device_name: deviceName }
+              : device
+          )
+        );
+
+        alert("Sensor berhasil diperbarui!");
+      } else {
+        // Jika dalam mode tambah, panggil createDevice
+        const response = await axios.post(
+          `http://localhost:3000/plots/${plotId}/devices/`,
+          { device_name: deviceName },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log("Device created:", response.data);
+
+        // Tambahkan perangkat baru ke daftar lokal
+        setDevices([...devices, response.data.device]);
+
+        alert("Sensor berhasil ditambahkan!");
+      }
+
+      // Reset formulir dan mode edit
+      setDeviceName("");
+      setEditingDevice(null);
+    } catch (error) {
+      console.error("Error saving device:", error);
+      alert("Gagal menyimpan sensor. Silakan coba lagi.");
+    }
+  };
+
   return (
     <section className="flex flex-col md:flex-row items-start justify-center py-8 md:py-10 gap-4 mb-10">
       {/* Left Section - Table */}
@@ -148,6 +228,12 @@ const SensorConfig = () => {
                 </td>
                 <td className="py-2 px-2 md:px-3 font-poppins">
                   <button
+                    onClick={() => handleEditDevice(device.device_id)}
+                    className="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-2 rounded-md mr-2"
+                  >
+                    Edit
+                  </button>
+                  <button
                     onClick={() => handleDeleteDevice(device.device_id)}
                     className="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded-md"
                   >
@@ -165,7 +251,7 @@ const SensorConfig = () => {
         <h2 className="text-lg font-poppins font-bold text-black mb-4">
           Configuration
         </h2>
-        <form className="flex flex-col gap-3" onSubmit={createDevice}>
+        <form className="flex flex-col gap-3" onSubmit={saveDevice}>
           <label htmlFor="plotSelect" className="font-poppins text-black">
             Pilih Petak
           </label>
@@ -173,7 +259,7 @@ const SensorConfig = () => {
             id="plotSelect"
             className="p-2 rounded-xl bg-white text-black border border-gray-300"
             value={plotId}
-            onChange={(e) => setPlotId(e.target.value)} // Perbarui plotId
+            onChange={(e) => setPlotId(e.target.value)}
           >
             <option value="">Pilih plot</option>
             {plots.map((plot) => (
@@ -191,15 +277,27 @@ const SensorConfig = () => {
             type="text"
             placeholder="Nama Sensor"
             value={deviceName}
-            onChange={(e) => setDeviceName(e.target.value)} // Perbarui deviceName
+            onChange={(e) => setDeviceName(e.target.value)}
             className="p-2 rounded-xl bg-white text-black border border-gray-300"
           />
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            {editingDevice && (
+              <button
+                onClick={() => {
+                  setEditingDevice(null);
+                  setDeviceName("");
+                }}
+                className="bg-red-500 text-white px-4 py-2 mt-4 rounded-xl"
+              >
+                Cancel
+              </button>
+            )}
+
             <button
               type="submit"
               className="bg-blue-600 text-white px-4 py-2 mt-4 rounded-xl"
             >
-              Submit
+              {editingDevice ? "Update Sensor" : "Tambah Sensor"}
             </button>
           </div>
         </form>
