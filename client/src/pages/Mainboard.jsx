@@ -38,7 +38,6 @@ const Mainboard = () => {
     });
   }
 
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -558,14 +557,14 @@ const Mainboard = () => {
           </table>
         </div>
 
-        <div className="border border-black p-4 rounded-md bg-gradient-to-r from-green-300 to-green-500 my-4">
+        <div className="border border-black text-black p-4 rounded-xl bg-[#DEFDC0] my-4">
           {Array.isArray(plantNeeds) ? (
             plantNeeds.map((plant, index) => (
               <div
                 key={index}
                 className="flex justify-between items-center mb-2"
               >
-                <div>
+                <div className="mr-5">
                   <p className="font-bold">Crop Name: {plant.crop_name}</p>
                   <p>Optimal Moisture: {plant.optimal_moisture}</p>
                   <p>Water Requirement: {plant.water_requirement}</p>
@@ -588,7 +587,7 @@ const Mainboard = () => {
             ))
           ) : (
             <div className="flex justify-between items-center mb-2">
-              <div>
+              <div className="mr-5">
                 <p className="font-bold">Crop Name: {plantNeeds.crop_name}</p>
                 <p>Optimal Moisture: {plantNeeds.optimal_moisture}</p>
                 <p>Water Requirement: {plantNeeds.water_requirement}</p>
