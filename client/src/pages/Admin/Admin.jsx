@@ -16,6 +16,16 @@ const Admin = () => {
   const [activePage, setActivePage] = useState("Admin"); // State halaman aktif
   const [open, setOpen] = useState(true);
 
+  const role = localStorage.getItem("role");
+
+  if (role !== "admin") {
+    // window.location.href = "/login";
+    alert("Anda tidak memiliki akses sebagai admin!");
+    setTimeout(() => {
+      window.location.href = "/mainboard";
+    });
+  }
+
   const menus = [
     { name: "Irrigation Log", icon: MdOutlineDashboard },
     { name: "Plot Configuration", icon: AiOutlineUser },
@@ -31,7 +41,7 @@ const Admin = () => {
     <div className="flex h-screen bg-gradient-to-b from-[#16332F] to-[#2F6D3C] text-white">
       {/* Sidebar */}
       <div
-        className={`bg-[#0e0e0e] ${
+        className={`bg-[rgba(171,181,152,0.38)] ${
           open ? "w-60" : "w-16"
         } duration-500 text-gray-100 px-4`}
       >
@@ -72,41 +82,15 @@ const Admin = () => {
 
         {/* Content Area */}
         <div className="p-4">
-        <div>
-          {activePage === "Irrigation Log" ? (
-            <LogAdmin />
-          ) : (
-            null
-          )}
-        </div>
-        <div>
-          {activePage === "Plot Configuration" ? (
-            <PlotConfig />
-          ) : (
-            null
-          )}
-        </div>
-        <div>
-          {activePage === "Sensor Configuration" ? (
-            <SensorConfig />
-          ) : (
-            null
-          )}
-        </div>
-        <div>
-          {activePage === "Plot Quality" ? (
-            <QualityData />
-          ) : (
-            null
-          )}
-        </div>
-        <div>
-          {activePage === "Cron Job" ? (
-            <CronJob />
-          ) : (
-            null
-          )}
-        </div>
+          <div>{activePage === "Irrigation Log" ? <LogAdmin /> : null}</div>
+          <div>
+            {activePage === "Plot Configuration" ? <PlotConfig /> : null}
+          </div>
+          <div>
+            {activePage === "Sensor Configuration" ? <SensorConfig /> : null}
+          </div>
+          <div>{activePage === "Plot Quality" ? <QualityData /> : null}</div>
+          <div>{activePage === "Cron Job" ? <CronJob /> : null}</div>
         </div>
       </div>
     </div>
