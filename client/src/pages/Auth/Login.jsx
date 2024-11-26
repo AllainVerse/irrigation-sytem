@@ -18,19 +18,15 @@ const Login = () => {
         password,
       });
 
-      console.log(response); 
+      console.log(response);
       console.log(response.data);
 
-<<<<<<< HEAD
-      const { token, name } = response.data;
-=======
       const { token, name, role } = response.data; // Tambahkan 'role' pada destructuring
->>>>>>> 9e853a63e17e4a34b97f888c5d2d44aa094576ae
 
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("name", name);
-        localStorage.setItem("role", role); // Simpan role pada localStorage
+        localStorage.setItem("role", role); // Simpan role pada localStorage  
 
         if (role === "farmer") {
           window.location.href = "/Mainboard";
