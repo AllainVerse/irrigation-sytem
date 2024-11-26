@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Logo from "../../assets/logo-removebg-preview.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
-// import { getAuth } from "../../services/auth.service";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,10 +18,10 @@ const Login = () => {
         password,
       });
 
-      console.log(response); // Check the entire response object
-      console.log(response.data); // Check the data field
+      console.log(response); 
+      console.log(response.data);
 
-      const { token, name } = response.data; // Make sure `token` exists in response
+      const { token, name } = response.data;
 
       if (token) {
         localStorage.setItem("token", token);
@@ -32,7 +31,7 @@ const Login = () => {
         throw new Error("Login failed: token not provided");
       }
     } catch (err) {
-      console.error(err); // Log the error for debugging
+      console.error(err);
       setError("Invalid login credentials or server error");
     }
   };
